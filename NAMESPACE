@@ -2,5 +2,5 @@
 
 export(alldownstream)
 export(allupstream)
-export(list.all.upstream)
 export(list_all_downstream)
+export(list_all_upstream)
