@@ -2,7 +2,7 @@
 catchstats
 ==========
 
-catchstats includes a number of functions for working with nested catchment or river-network data tables, to identify all upstream areas, all downstream areas, segments or sub-catchments between catchment pairs etc. All of these functions require a dataframe that includes a unique catchment identifier field (column) and a field (column) identifying the next downstream catchment id. Together these are referred to as a 'hierarchy table'.
+catchstats includes a number of functions written by Chris Walsh for working with nested catchment or river-network data tables, to identify all upstream areas, all downstream areas, segments or sub-catchments between catchment pairs etc. All of these functions require a dataframe that includes a unique catchment identifier field (column) and a field (column) identifying the next downstream catchment id. Together these are referred to as a 'hierarchy table'.
 
 Installation
 ============
