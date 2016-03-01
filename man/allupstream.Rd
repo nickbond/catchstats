@@ -4,12 +4,12 @@
 \alias{allupstream}
 \title{Return a vector of all subcatchments upstream of a specified catchment}
 \usage{
-allupstream(hierarchy, catchname)
+allupstream(cat.hier, catchname)
 }
 \arguments{
-\item{hierarchy}{a dataframe containing catchment id and next downstream (nextds) id fields}
+\item{cat.hier}{a dataframe containing catchment id and next downstream (nextds) id fields}
 
-\item{catchname}{a dataframe containing catchment id for which a vector of upstream catchment 
+\item{catchname}{a dataframe containing catchment id for which a vector of upstream catchment
 ids will be returned.}
 }
 \value{
@@ -20,7 +20,7 @@ Return a vector of all subcatchments upstream of a specified catchment
 }
 \note{
 Function depends on the next downstream field in a stream network 'hierarchy' table (dataframe).
-When used in conjunction with list_all_upstream it is possible to get a list of catchments upstream 
+When used in conjunction with list_all_upstream it is possible to get a list of catchments upstream
 of a vector of sites. This can then be used to support further aggregation of environmental variables
 for contributing catchments upstream of a list of catchments of interest (for example for aggregating rainfall).
 }
