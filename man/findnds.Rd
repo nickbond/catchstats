@@ -15,7 +15,8 @@ ids will be returned.}
 \item{candidates}{a vector of candidate catchment ids. Note this need not be a complete hierarchy}
 }
 \value{
-a list of downstream catchment ids for each catchment in catchnames
+a list of downstream catchment ids for each catchment in catchnames. Returns -1 where there
+is no downstream site
 }
 \description{
 Identify the next downstream site from a set of candidates
@@ -26,10 +27,9 @@ Can be used to support further aggregation of environmental variables for sub-ca
 of a list of catchments of interest (e.g. for calculating barrier numbers).
 }
 \examples{
-#'data(mwcats)
-
-#find site next downstreamof the first site in the catchment list
 data(mwcats)
+
+#find site next downstream of the first site in the catchment list
 
 findnds(cat.hier = mwcats[,c(1:2)], catchname = mwcats$site[1], candidates=mwcats$site)
 

@@ -1,6 +1,7 @@
-#' List of catchments (sites) and environmental variables for streams in and around Melbourne, Australia.
+#' Melbourne stream catchment variables
 #'
-#' A dataset containing the catchment id and other attributes for 12319 sub-catchments.
+#' A dataset containing the catchment id and other attributes for 12319 sub-catchments
+#' around the Melbourne region in southeastern Australia.
 #'
 #' @format A data frame with 12319 rows and 10 variables:
 #'\describe{

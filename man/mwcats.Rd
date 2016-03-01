@@ -3,7 +3,7 @@
 \docType{data}
 \name{mwcats}
 \alias{mwcats}
-\title{List of catchments (sites) and environmental variables for streams in and around Melbourne, Australia.}
+\title{Melbourne stream catchment variables}
 \format{A data frame with 12319 rows and 10 variables:
 \describe{
 \item{site}{site names}
@@ -30,7 +30,8 @@ The University of Melbourne. October 2013.}
 mwcats
 }
 \description{
-A dataset containing the catchment id and other attributes for 12319 sub-catchments.
+A dataset containing the catchment id and other attributes for 12319 sub-catchments
+around the Melbourne region in southeastern Australia.
 }
 \keyword{datasets}
 
