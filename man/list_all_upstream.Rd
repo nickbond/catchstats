@@ -7,10 +7,10 @@
 list_all_upstream(cat.hier, catchnames)
 }
 \arguments{
+\item{cat.hier}{a dataframe containing catchment id and next downstream (nextds) id fields}
+
 \item{catchnames}{a vector of catchment ids for which a a list of upstream catchment
 ids will be returned.}
-
-\item{hierarchy}{a dataframe containing catchment id and next downstream (nextds) id fields}
 }
 \value{
 a list of upstream catchment ids for each catchment in catchnames
