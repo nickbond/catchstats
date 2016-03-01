@@ -8,6 +8,12 @@
 #' Can be used to support further aggregation of environmental variables for sub-catchments downstream
 #' of a list of catchments of interest (e.g. for calculating barrier numbers).
 #' @examples
+#'#'data(mwcats)
+#'
+#'#find all sites upstream of the first five sites in the catchment list
+#'data(mwcats)
+#'
+#'list_all_upstream(cat.hier = mwcats, catchname = mwcats$site[1:5])
 #'
 #' @export
 

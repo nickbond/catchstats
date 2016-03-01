@@ -9,7 +9,12 @@
 #' of a vector of sites. This can then be used to support further aggregation of environmental variables
 #' for contributing catchments upstream of a list of catchments of interest (for example for aggregating rainfall).
 #' @examples
+#'data(mwcats)
 #'
+#'#find all sites upstream of the first site in the catchment list
+#'data(mwcats)
+#'
+#'allupstream(cat.hier = mwcats, catchname = mwcats$site[1])
 #' @export
 
 allupstream <- function(cat.hier,catchname){

@@ -2,5 +2,7 @@
 
 export(alldownstream)
 export(allupstream)
+export(findnds)
 export(list_all_downstream)
+export(list_all_nds)
 export(list_all_upstream)

@@ -22,6 +22,12 @@ Identify all the subcatchments downstream of a list of specified catchments
 Function depends on the next downstream field in a stream network 'hierarchy' table (dataframe).
 }
 \examples{
+#'#'data(mwcats)
+
+#find all sites downstream of the first five sites in the catchment list
+data(mwcats)
+
+list_all_downstream(cat.hier = mwcats, catchname = mwcats$site[1:5])
 
 }
 

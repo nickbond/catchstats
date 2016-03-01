@@ -4,13 +4,15 @@
 \alias{findnds}
 \title{Identify the next downstream site from a set of candidates}
 \usage{
-findnds(cat.hier, catchnames, candidates)
+findnds(cat.hier, catchname, candidates)
 }
 \arguments{
 \item{cat.hier}{a dataframe containing catchment id and next downstream (nextds) id fields}
 
-\item{catchnames}{a vector of catchment ids for which a a list of downstream catchments
+\item{catchname}{a catchment id for which a a list of downstream catchments
 ids will be returned.}
+
+\item{candidates}{a vector of candidate catchment ids. Note this need not be a complete hierarchy}
 }
 \value{
 a list of downstream catchment ids for each catchment in catchnames
@@ -24,6 +26,12 @@ Can be used to support further aggregation of environmental variables for sub-ca
 of a list of catchments of interest (e.g. for calculating barrier numbers).
 }
 \examples{
+#'data(mwcats)
+
+#find site next downstreamof the first site in the catchment list
+data(mwcats)
+
+findnds(cat.hier = mwcats[,c(1:2)], catchname = mwcats$site[1], candidates=mwcats$site)
 
 }
 

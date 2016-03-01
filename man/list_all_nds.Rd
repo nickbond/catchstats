@@ -12,7 +12,7 @@ list_all_nds(cat.hier, catchnames, candidates)
 \item{catchnames}{a vector of catchment ids (sites) for which a a list of downstream catchments
 ids will be returned.}
 
-\item{candidates}{a vector of candidate catchment ids}
+\item{candidates}{a vector of candidate catchment ids. Note this need not be a complete hierarchy}
 }
 \value{
 a list of downstream catchment ids for each catchment in catchnames
@@ -26,6 +26,13 @@ Can be used to support further aggregation of environmental variables for sub-ca
 of a list of catchments of interest (e.g. for calculating barrier numbers).
 }
 \examples{
+data(mwcats)
+
+#find next downstream sites from a list of candidates for a list of sites
+data(mwcats)
+
+list_all_nds(cat.hier = mwcats[,c(1:2)], catchnames = mwcats$site[1:5],
+candidates=sample(mwcats$site, size = 4000))
 
 }
 
