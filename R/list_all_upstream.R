@@ -1,6 +1,6 @@
 #' Identify all the subcatchments upstream of a list of specified catchments
 #'
-#' @param hierarchy a dataframe containing catchment id and next downstream (nextds) id fields
+#' @param cat.hier a dataframe containing catchment id and next downstream (nextds) id fields
 #' @param catchnames a vector of catchment ids for which a a list of upstream catchment
 #' ids will be returned.
 #' @return a list of upstream catchment ids for each catchment in catchnames
