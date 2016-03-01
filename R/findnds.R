@@ -1,6 +1,6 @@
 #' Identify the next downstream site from a set of candidates
 #'
-#' @param cat.hier a dataframe containing catchment id and next downstream (nextds) id fields
+#' @param hierarchy a dataframe containing catchment id and next downstream (nextds) id fields
 #' @param catchname a catchment id for which a a list of downstream catchments
 #' ids will be returned.
 #' @param candidates a vector of candidate catchment ids. Note this need not be a complete hierarchy
@@ -14,20 +14,20 @@
 #'
 #'#find site next downstream of the first site in the catchment list
 #'
-#'findnds(cat.hier = mwcats[,c(1:2)], catchname = mwcats$site[1], candidates=mwcats$site)
+#'findnds(hierarchy = mwcats[,c(1:2)], catchname = mwcats$site[1], candidates=mwcats$site)
 #'
 #' @export
 
-findnds <- function(cat.hier,catchname,candidates) {
-  names(cat.hier)<-c("site", "nextds")
-  y <- cat.hier$nextds[cat.hier$site == catchname]
+findnds <- function(hierarchy,catchname,candidates) {
+  names(hierarchy)<-c("site", "nextds")
+  y <- hierarchy$nextds[hierarchy$site == catchname]
   if(y %in% candidates & length(y)!=0) {
     return(y) } else{
-      y <- cat.hier$nextds[cat.hier$site == catchname]
+      y <- hierarchy$nextds[hierarchy$site == catchname]
 
       test <- NULL
       while(length(test) == 0 ) {
-        y <- cat.hier$nextds[cat.hier$site == y]
+        y <- hierarchy$nextds[hierarchy$site == y]
         test <- candidates %in% y
         test <- test[test]
         if(!length(test)==TRUE) {

@@ -1,6 +1,6 @@
 #' Identify all the subcatchments downstream of a list of specified catchments
 #'
-#' @param cat.hier a dataframe containing catchment id and next downstream (nextds) id fields
+#' @param hierarchy a dataframe containing catchment id and next downstream (nextds) id fields
 #' @param catchnames a vector of catchment ids for which a vector of next downstream catchment
 #' ids will be returned.
 #' @return a vector of next downstream catchment ids for each catchment in catchnames
@@ -11,17 +11,17 @@
 #'#find all sites downstream of the first five sites in the catchment list
 #'data(mwcats)
 #'
-#'list_all_downstream(cat.hier = mwcats, catchname = mwcats$site[1:5])
+#'list_all_downstream(hierarchy = mwcats, catchname = mwcats$site[1:5])
 #'
 #' @export
 
-list_all_downstream<-function(cat.hier, catchnames) {
+list_all_downstream<-function(hierarchy, catchnames) {
 
   all.ds.sites<-vector("list",length(catchnames))
 
   for (i in 1:length(catchnames))
   {
-    ds.sites<-alldownstream(cat.hier,catchnames[i])
+    ds.sites<-alldownstream(hierarchy,catchnames[i])
     all.ds.sites[[i]]<-ds.sites
   }
   return(all.ds.sites)

@@ -4,10 +4,10 @@
 \alias{list_all_nds}
 \title{Identify the next downstream site for each site in a list of sites.}
 \usage{
-list_all_nds(cat.hier, catchnames, candidates)
+list_all_nds(hierarchy, catchnames, candidates)
 }
 \arguments{
-\item{cat.hier}{a dataframe containing catchment id and next downstream (nextds) id fields}
+\item{hierarchy}{a dataframe containing catchment id and next downstream (nextds) id fields}
 
 \item{catchnames}{a vector of catchment ids (sites) for which a a list of downstream catchments
 ids will be returned.}
@@ -32,7 +32,7 @@ data(mwcats)
 #find next downstream sites from a list of candidates for a list of sites
 data(mwcats)
 
-list_all_nds(cat.hier = mwcats[,c(1:2)], catchnames = mwcats$site[1:5],
+list_all_nds(hierarchy = mwcats[,c(1:2)], catchnames = mwcats$site[1:5],
 candidates=sample(mwcats$site, size = 4000))
 
 }

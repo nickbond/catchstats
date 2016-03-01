@@ -4,10 +4,10 @@
 \alias{findnds}
 \title{Identify the next downstream site from a set of candidates}
 \usage{
-findnds(cat.hier, catchname, candidates)
+findnds(hierarchy, catchname, candidates)
 }
 \arguments{
-\item{cat.hier}{a dataframe containing catchment id and next downstream (nextds) id fields}
+\item{hierarchy}{a dataframe containing catchment id and next downstream (nextds) id fields}
 
 \item{catchname}{a catchment id for which a a list of downstream catchments
 ids will be returned.}
@@ -31,7 +31,7 @@ data(mwcats)
 
 #find site next downstream of the first site in the catchment list
 
-findnds(cat.hier = mwcats[,c(1:2)], catchname = mwcats$site[1], candidates=mwcats$site)
+findnds(hierarchy = mwcats[,c(1:2)], catchname = mwcats$site[1], candidates=mwcats$site)
 
 }
 

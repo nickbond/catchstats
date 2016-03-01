@@ -4,10 +4,10 @@
 \alias{list_all_upstream}
 \title{Identify all the subcatchments upstream of a list of specified catchments}
 \usage{
-list_all_upstream(cat.hier, catchnames)
+list_all_upstream(hierarchy, catchnames)
 }
 \arguments{
-\item{cat.hier}{a dataframe containing catchment id and next downstream (nextds) id fields}
+\item{hierarchy}{a dataframe containing catchment id and next downstream (nextds) id fields}
 
 \item{catchnames}{a vector of catchment ids for which a a list of upstream catchment
 ids will be returned.}
@@ -29,7 +29,7 @@ of a list of catchments of interest (e.g. for calculating barrier numbers).
 #find all sites upstream of the first five sites in the catchment list
 data(mwcats)
 
-list_all_upstream(cat.hier = mwcats, catchname = mwcats$site[1:5])
+list_all_upstream(hierarchy = mwcats, catchname = mwcats$site[1:5])
 
 }
 

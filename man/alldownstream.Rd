@@ -4,10 +4,10 @@
 \alias{alldownstream}
 \title{Return a vector of all subcatchments downstream of a specified catchment}
 \usage{
-alldownstream(cat.hier, catchname)
+alldownstream(hierarchy, catchname)
 }
 \arguments{
-\item{cat.hier}{a dataframe containing catchment id and next downstream (nextds) id fields}
+\item{hierarchy}{a dataframe containing catchment id and next downstream (nextds) id fields}
 
 \item{catchname}{a dataframe containing catchment id for which a vector of downstream catchment
 ids will be returned.}
@@ -30,6 +30,6 @@ for sub-catchments downstream of a list of catchments of interest (e.g. for calc
 #find all sites downstream of the first site in the catchment list
 data(mwcats)
 
-alldownstream(cat.hier = mwcats, catchname = mwcats$site[1])
+alldownstream(hierarchy = mwcats, catchname = mwcats$site[1])
 }
 

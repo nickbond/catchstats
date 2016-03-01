@@ -1,6 +1,6 @@
 #' Identify the next downstream site for each site in a list of sites.
 #'
-#' @param cat.hier a dataframe containing catchment id and next downstream (nextds) id fields
+#' @param hierarchy a dataframe containing catchment id and next downstream (nextds) id fields
 #' @param catchnames a vector of catchment ids (sites) for which a a list of downstream catchments
 #' ids will be returned.
 #' @param candidates a vector of candidate catchment ids. Note this need not be a complete hierarchy
@@ -15,19 +15,19 @@
 #'#find next downstream sites from a list of candidates for a list of sites
 #'data(mwcats)
 #'
-#'list_all_nds(cat.hier = mwcats[,c(1:2)], catchnames = mwcats$site[1:5],
+#'list_all_nds(hierarchy = mwcats[,c(1:2)], catchnames = mwcats$site[1:5],
 #'candidates=sample(mwcats$site, size = 4000))
 #'
 #' @export
 
 
-list_all_nds <- function(cat.hier, catchnames, candidates) {
-names(cat.hier)<-c("site","nextds")
+list_all_nds <- function(hierarchy, catchnames, candidates) {
+names(hierarchy)<-c("site","nextds")
 
   all.nds.sites<-vector(, length = length(catchnames))
 
   for (i in seq_along(catchnames)) {
-    ds.site<-findnds(cat.hier, catchnames[i],candidates)
+    ds.site<-findnds(hierarchy, catchnames[i],candidates)
     all.nds.sites[i]<-ds.site
   }
   return(all.nds.sites)

@@ -1,6 +1,6 @@
 #' Return a vector of all subcatchments downstream of a specified catchment
 
-#' @param cat.hier a dataframe containing catchment id and next downstream (nextds) id fields
+#' @param hierarchy a dataframe containing catchment id and next downstream (nextds) id fields
 #' @param catchname a dataframe containing catchment id for which a vector of downstream catchment
 #' ids will be returned.
 #' @return a vector of downstream catchment ids
@@ -14,14 +14,14 @@
 #'#find all sites downstream of the first site in the catchment list
 #'data(mwcats)
 #'
-#'alldownstream(cat.hier = mwcats, catchname = mwcats$site[1])
+#'alldownstream(hierarchy = mwcats, catchname = mwcats$site[1])
 #' @export
 
-alldownstream <- function(cat.hier, catchname){
-  if(length(which(cat.hier$site==catchname))>0)
+alldownstream <- function(hierarchy, catchname){
+  if(length(which(hierarchy$site==catchname))>0)
   {
     catchname <- as.vector(catchname)
-    allsc <- as.vector(cat.hier$nextds[cat.hier$site==catchname])
+    allsc <- as.vector(hierarchy$nextds[hierarchy$site==catchname])
     allsc <- allsc[!is.na(allsc)]
     #subcatchments immediately upstream
     nbrnch <- end <- length(allsc)
@@ -31,7 +31,7 @@ alldownstream <- function(cat.hier, catchname){
     {
       for(j in start:end)
       {
-        allsc <- c(allsc,as.vector(cat.hier$nextds[cat.hier$site == allsc[j]]))
+        allsc <- c(allsc,as.vector(hierarchy$nextds[hierarchy$site == allsc[j]]))
         allsc <- allsc[!is.na(allsc)]
       }
       start <- end + 1
