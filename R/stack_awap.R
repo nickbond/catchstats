@@ -20,11 +20,7 @@
 #' vic_awap <- stack_awap(bbox=vic, start="19900131")
 #' writeRaster(vic_awap, filename="vic_awap_1990_2014.grd", bandorder='BIL', overwrite=TRUE)
 #' @export
-require(rgdal)
-require(raster)
-require(stringr)
-require(maptools)
-require(lubridate)
+
 
 stack_awap<-function(loc_dir=NULL, bbox=NULL, stack_proj=c("+init=epsg:28355"), start_date="20120131") {
   if(is.null(bbox)) stop("please specify a bounding box or specify 'none' for the whole country")

@@ -8,7 +8,13 @@ Description: A suite of tools for tracing the links within a nested\n
   catchment dataset. Nested implies that for each subcatchment\n
   there is an associated field listing the next downstream or upstream\n
   subcatchment. Together these can be used for various tracing tasks.
-License:  GPL-3
+License: GPL-3
 Depends: R (>= 2.10)
 LazyData: TRUE
 RoxygenNote: 5.0.1
+Imports: raster,
+    rgdal,
+    stringr,
+    maptools,
+    lubridate,
+    curl

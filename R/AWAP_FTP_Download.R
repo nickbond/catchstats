@@ -9,8 +9,6 @@
 #' @examples
 #' awap_download()
 #' @export
-require("RCurl")
-
 
 awap_download <- function(loc_dir = NULL) {
   loc_dir <-ifelse(!is.null(loc_dir), loc_dir, getwd())

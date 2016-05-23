@@ -23,12 +23,6 @@
 #'
 #' @export
 
-require(rgdal)
-require(raster)
-require(stringr)
-require(maptools)
-require(lubridate)
-
 
 extractRasterPoly<-function(shpfile, rast, catid_col, start=1, end=nrow(shpfile)){
 
