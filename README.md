@@ -26,15 +26,8 @@ Example
 
 To be completed
 
-<!--  The code below produces the following plot for Cooper Creek, a highly ephemeral river in western Queensland, Australia. The function uses geom_raster() from the ggplot2 package. Addtional options are available (see ?ctf_heatmap for details). -->
-<!-- ``` -->
-<!--  library(hydrostats) -->
-<!--  library(hydroplots) -->
-<!--  data(Cooper) -->
-<!--  ctf_heatmap(Cooper) -->
-<!-- ```  -->
-<!-- ![Alt tag](https://github.com/nickbond/hydroplots/raw/master/ctf_heatmap.png "CTF Heatmap") -->
-Developer
+
+
 =========
 
 Nick Bond <n.bond@griffith.edu.au>
