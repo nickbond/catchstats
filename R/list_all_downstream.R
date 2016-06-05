@@ -15,14 +15,13 @@
 #'
 #' @export
 
-list_all_downstream<-function(hierarchy, catchnames) {
-
-  all.ds.sites<-vector("list",length(catchnames))
-
-  for (i in 1:length(catchnames))
-  {
-    ds.sites<-alldownstream(hierarchy,catchnames[i])
-    all.ds.sites[[i]]<-ds.sites
-  }
-  return(all.ds.sites)
+list_all_downstream <- function(hierarchy, catchnames) {
+    
+    all.ds.sites <- vector("list", length(catchnames))
+    
+    for (i in 1:length(catchnames)) {
+        ds.sites <- alldownstream(hierarchy, catchnames[i])
+        all.ds.sites[[i]] <- ds.sites
+    }
+    return(all.ds.sites)
 }

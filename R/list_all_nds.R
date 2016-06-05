@@ -22,14 +22,14 @@
 
 
 list_all_nds <- function(hierarchy, catchnames, candidates) {
-names(hierarchy)<-c("site","nextds")
-
-  all.nds.sites<-vector(, length = length(catchnames))
-
-  for (i in seq_along(catchnames)) {
-    ds.site<-findnds(hierarchy, catchnames[i],candidates)
-    all.nds.sites[i]<-ds.site
-  }
-  return(all.nds.sites)
+    names(hierarchy) <- c("site", "nextds")
+    
+    all.nds.sites <- vector(, length = length(catchnames))
+    
+    for (i in seq_along(catchnames)) {
+        ds.site <- findnds(hierarchy, catchnames[i], candidates)
+        all.nds.sites[i] <- ds.site
+    }
+    return(all.nds.sites)
 }
 

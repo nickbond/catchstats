@@ -5,11 +5,12 @@
 \title{Code to build a raster stack from AWAP grids for use in further analyses.}
 \usage{
 stack_awap(loc_dir = NULL, bbox = NULL,
-  stack_proj = c("+init=epsg:28355"), start_date = "20120131")
+  stack_proj = c("+init=epsg:28355"), start_date = "20120131",
+  variable = "FWDis", sequence = "monthly", stat = "raw")
 }
 \arguments{
 \item{loc_dir}{The local directory in wich the AWAP zip files are stored
-If not specified, the function looks for the folder "/AWAP/Run26j/FWDis/"
+If not specified, the function looks for the folder '/AWAP/Run26j/FWDis/'
 within the local working directory.}
 
 \item{bbox}{A list of coordinates defining a subregion for the raster stack}
@@ -29,13 +30,13 @@ directory specfiied above (see AWAP_download for more details).
 \examples{
 Define a bounding box for the city of Melbourne, Australia and surrounds
 melb <- list(x = c(144.0000, 146.5000), y = c(-39.0000, -37.0000))
-stack_awap(bbox=melb, start="20130131")
+stack_awap(bbox=melb, start='20130131')
 South-east Queensland
 seqld <- list(x = c(149, 154.000), y = c(-21.0000, -29.0000))
-seq_awap <- stack_awap(bbox=seq, start="20130131")
-writeRaster(seq_awap, filename="seq_awap.grd", bandorder='BIL', overwrite=TRUE)
+seq_awap <- stack_awap(bbox=seq, start='20130131')
+writeRaster(seq_awap, filename='seq_awap.grd', bandorder='BIL', overwrite=TRUE)
 vic <- list(x = c(141.0, 150.2), y = c(-34.0, -39.2))
-vic_awap <- stack_awap(bbox=vic, start="19900131")
-writeRaster(vic_awap, filename="vic_awap_1990_2014.grd", bandorder='BIL', overwrite=TRUE)
+vic_awap <- stack_awap(bbox=vic, start='19900131')
+writeRaster(vic_awap, filename='vic_awap_1990_2014.grd', bandorder='BIL', overwrite=TRUE)
 }
 

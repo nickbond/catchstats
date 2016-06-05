@@ -31,7 +31,7 @@ Returns the following error if downstream is not downstream of upstream:
 \examples{
 data(mwcats)
 #function needs checking.
-#riverreach(hierarchy = mwcats[,c(1:2)], upstream="YARR2415", downstream="YARR001")
+#riverreach(hierarchy = mwcats[,c(1:2)], upstream='YARR2415', downstream='YARR001')
 
 }
 

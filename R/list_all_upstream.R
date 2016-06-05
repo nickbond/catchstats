@@ -17,14 +17,13 @@
 #'
 #' @export
 
-list_all_upstream<-function(hierarchy, catchnames) {
-
-  all.us.sites<-vector("list",length(catchnames))
-
-  for (i in 1:length(catchnames))
-  {
-    us.sites<-allupstream(hierarchy,catchnames[i])
-    all.us.sites[[i]]<-us.sites
-  }
-  return(all.us.sites)
+list_all_upstream <- function(hierarchy, catchnames) {
+    
+    all.us.sites <- vector("list", length(catchnames))
+    
+    for (i in 1:length(catchnames)) {
+        us.sites <- allupstream(hierarchy, catchnames[i])
+        all.us.sites[[i]] <- us.sites
+    }
+    return(all.us.sites)
 }

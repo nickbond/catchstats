@@ -27,15 +27,15 @@ function to extract data from a raster or raster stack for indivdiual polygons w
 \examples{
 Define a bounding box for the city of Melbourne, Australia and surrounds
 melb <- list(x = c(144.0000, 146.5000), y = c(-39.0000, -37.0000))
-awap_stack <- stack_awap(bbox=melb, start="20130131")
-vic_cats<-readShapePoly("/Users/nickbond/Data/GIS_Data/Australia/BaseData/Catchments/VIC/VIC_CATCHMENTS.shp")
-proj4string(vic_cats) <- CRS("+init=epsg:4283")
-vic_cats <- spTransform(vic_cats, CRS("+init=epsg:28355"))
-vic_cats <- vic_cats[which(vic_cats@data$BNAME \%in\% c("YARRA RIVER", "MARIBYRNONG RIVER")),]
+awap_stack <- stack_awap(bbox=melb, start='20130131')
+vic_cats<-readShapePoly('/Users/nickbond/Data/GIS_Data/Australia/BaseData/Catchments/VIC/VIC_CATCHMENTS.shp')
+proj4string(vic_cats) <- CRS('+init=epsg:4283')
+vic_cats <- spTransform(vic_cats, CRS('+init=epsg:28355'))
+vic_cats <- vic_cats[which(vic_cats@data$BNAME \%in\% c('YARRA RIVER', 'MARIBYRNONG RIVER')),]
 plot(awap_stack[[1]])
 plot(vic_cats, add=TRUE)
 
-vic_cats_runoff<-extractRasterPoly(vic_cats, rast=melb_awap, catid_col="BNAME")
+vic_cats_runoff<-extractRasterPoly(vic_cats, rast=melb_awap, catid_col='BNAME')
 
 }
 

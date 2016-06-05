@@ -11,7 +11,7 @@ networkstats(site1, site2, FUN = "max", env.vars = NULL)
 
 \item{site2}{a second vector of sites for which all pairs are sought}
 
-\item{FUN}{quoted scalar function to apply to env.vars (e.g. "sum")}
+\item{FUN}{quoted scalar function to apply to env.vars (e.g. 'sum')}
 
 \item{env.vars}{environmental variables for which summary stats are required}
 }

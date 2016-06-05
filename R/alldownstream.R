@@ -17,30 +17,26 @@
 #'alldownstream(hierarchy = mwcats, catchname = mwcats$site[1])
 #' @export
 
-alldownstream <- function(hierarchy, catchname){
-  if(length(which(hierarchy$site==catchname))>0)
-  {
-    catchname <- as.vector(catchname)
-    allsc <- as.vector(hierarchy$nextds[hierarchy$site==catchname])
-    allsc <- allsc[!is.na(allsc)]
-    #subcatchments immediately upstream
-    nbrnch <- end <- length(allsc)
-    #number of branches immediately upstream
-    start <- 1
-    while(nbrnch > 0 & !-1 %in% allsc)
-    {
-      for(j in start:end)
-      {
-        allsc <- c(allsc,as.vector(hierarchy$nextds[hierarchy$site == allsc[j]]))
+alldownstream <- function(hierarchy, catchname) {
+    if (length(which(hierarchy$site == catchname)) > 0) {
+        catchname <- as.vector(catchname)
+        allsc <- as.vector(hierarchy$nextds[hierarchy$site == catchname])
         allsc <- allsc[!is.na(allsc)]
-      }
-      start <- end + 1
-      end <- length(allsc)
-      nbrnch <- end - (start - 1)
-    }
-    allsc <- c(catchname,allsc)
-    allsc <- allsc[allsc != -1]
-    allsc
-  } else
-    cat(paste(catchname,"is not a site listed in the hierarchy table","\n"))
+        # subcatchments immediately upstream
+        nbrnch <- end <- length(allsc)
+        # number of branches immediately upstream
+        start <- 1
+        while (nbrnch > 0 & !-1 %in% allsc) {
+            for (j in start:end) {
+                allsc <- c(allsc, as.vector(hierarchy$nextds[hierarchy$site == allsc[j]]))
+                allsc <- allsc[!is.na(allsc)]
+            }
+            start <- end + 1
+            end <- length(allsc)
+            nbrnch <- end - (start - 1)
+        }
+        allsc <- c(catchname, allsc)
+        allsc <- allsc[allsc != -1]
+        allsc
+    } else cat(paste(catchname, "is not a site listed in the hierarchy table", "\n"))
 }

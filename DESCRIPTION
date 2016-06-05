@@ -17,4 +17,4 @@ Imports: raster,
     stringr,
     maptools,
     lubridate,
-    curl
+    RCurl

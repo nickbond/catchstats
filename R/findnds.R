@@ -18,23 +18,24 @@
 #'
 #' @export
 
-findnds <- function(hierarchy,catchname,candidates) {
-  names(hierarchy)<-c("site", "nextds")
-  y <- hierarchy$nextds[hierarchy$site == catchname]
-  if(y %in% candidates & length(y)!=0) {
-    return(y) } else{
-      y <- hierarchy$nextds[hierarchy$site == catchname]
-
-      test <- NULL
-      while(length(test) == 0 ) {
-        y <- hierarchy$nextds[hierarchy$site == y]
-        test <- candidates %in% y
-        test <- test[test]
-        if(!length(test)==TRUE) {
-          y <- -1
-          break
+findnds <- function(hierarchy, catchname, candidates) {
+    names(hierarchy) <- c("site", "nextds")
+    y <- hierarchy$nextds[hierarchy$site == catchname]
+    if (y %in% candidates & length(y) != 0) {
+        return(y)
+    } else {
+        y <- hierarchy$nextds[hierarchy$site == catchname]
+        
+        test <- NULL
+        while (length(test) == 0) {
+            y <- hierarchy$nextds[hierarchy$site == y]
+            test <- candidates %in% y
+            test <- test[test]
+            if (!length(test) == TRUE) {
+                y <- -1
+                break
+            }
         }
-      }
     }
-  return(y)
+    return(y)
 }
