@@ -15,7 +15,7 @@
 download_awap <- function() {
    # loc_dir <- ifelse(!is.null(loc_dir), loc_dir, getwd())
 
-    local_file_names <- list.files(path = paste0("awap_zip_files/"), pattern = "\\.flt.zip")
+    local_file_names <- list.files(path = file.path("awap_zip_files"), pattern = "\\.flt.zip")
 
     hist_remote_file_names <- getURL("ftp://ftp.eoc.csiro.au/pub/awap/Australia_historical/Run26j/FWDis/", verbose = TRUE, dirlistonly = TRUE, ftp.use.epsv = TRUE)
     op_remote_file_names <- getURL("ftp://ftp.eoc.csiro.au/pub/awap/Australia_operational_v26/monthly/", verbose = TRUE, dirlistonly = TRUE, ftp.use.epsv = TRUE)
@@ -35,26 +35,25 @@ download_awap <- function() {
     if(length(hist_grids_to_dwnld>1)) {
     for (i in 1:length(hist_grids_to_dwnld)) {
 
-        download.file(paste("ftp://ftp.eoc.csiro.au/pub/awap/Australia_historical/Run26j/FWDis/", hist_grids_to_dwnld[i], sep = ""), destfile = paste0("awap_zip_files/", hist_grids_to_dwnld[i]))
+        download.file(file.path("ftp.eoc.csiro.au","pub","awap","Australia_historical","Run26j","FWDis", hist_grids_to_dwnld[i]), destfile = file.path("awap_zip_files", hist_grids_to_dwnld[i]))
     }
     }
 
     if(length(op_grids_to_dwnld>1)) {
     for (i in 1:length(op_grids_to_dwnld)) {
-
-        download.file(paste("ftp://ftp.eoc.csiro.au/pub/awap/Australia_operational_v26/monthly/", op_grids_to_dwnld[i], sep = ""), destfile = paste("awap_zip_files/", op_grids_to_dwnld[i], sep = ""))
+      download.file(file.path("ftp.eoc.csiro.au","pub","awap","Australia_operational_v26","monthly", op_grids_to_dwnld[i]), destfile = file.path("awap_zip_files", op_grids_to_dwnld[i]))
     }
     }
 
 
 
-    updated.local.files <- list.files(path = paste0("awap_zip_files/"), pattern = "\\.flt.zip", full.names = TRUE)
+    updated.local.files <- list.files(path = file.path("awap_zip_files"), pattern = "\\.flt.zip", full.names = TRUE)
 
     if (!dir.exists("awap_raw_data")) {
         dir.create("awap_raw_data")
     }
 
     for (i in 1:length(updated.local.files)) {
-        unzip(updated.local.files[i], exdir = "awap_raw_data/", junkpaths = TRUE)
+        unzip(updated.local.files[i], exdir = file.path("awap_raw_data"), junkpaths = TRUE)
     }
 }
