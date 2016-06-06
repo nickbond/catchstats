@@ -25,18 +25,18 @@
 
 
 extractRasterPoly <- function(shpfile, rast, catid_col, start = 1, end = nrow(shpfile)) {
-    
+
     # vector('list', length(start:end))
-    
+
     loc.values <- vector("list", length(start:end))
     shpfile <- shpfile[start:end, ]
-    
+
     for (i in 1:length(shpfile)) {
         poly <- shpfile[i, ]
-        loc.values[[i]] <- extract(rast, poly, fun = mean, na.rm = T, weights = TRUE, normalizeWeights = TRUE, small = TRUE)
+        loc.values[[i]] <- extract(rast, poly, fun = "mean", na.rm = T, weights = TRUE, normalizeWeights = TRUE, small = TRUE)
         print(i)
     }
-    
+
     loc.values.df <- as.data.frame(t(do.call("rbind", loc.values)))
     names(loc.values.df) <- shpfile@data[, catid_col]
     return(loc.values.df)

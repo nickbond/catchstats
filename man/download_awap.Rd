@@ -4,22 +4,22 @@
 \alias{download_awap}
 \title{Code to download monthly AWAP grids to a specified directory}
 \usage{
-download_awap(loc_dir = NULL)
-}
-\arguments{
-\item{loc_dir}{The local directory to which the files will be downloaded and unzipped}
+download_awap()
 }
 \value{
-Downloads CSIRO AWAP files to the specified directory ready for further use
+Downloads CSIRO AWAP zip files into the sub-directory awap_zip_files
+and unzips those files into awap_raw_data for further processing.
 }
 \description{
 Code to download monthly AWAP grids to a specified directory
 }
 \note{
-The files will be downloaded to the directory specified (defaults to the
-current working directory) and unzipped. The function first checks to see which zip
+The files will be downloaded to the directories awap_zip files and awap_raw_data
+within the current working directory. The function first checks to see which zip
 files have previously been downloaded, and for this reason, if deleting files to save
-disk space it is best to delete the unzipped files in the directory '/AWAP/Run26j/FWDis/'.
+disk space it is best to delete the unzipped files in the directory 'awap_raw_data'.
+Re-running the function will then unzip the files again after checking for any new
+data files on the server.
 }
 \examples{
 download_awap()

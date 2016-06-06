@@ -4,18 +4,23 @@
 \alias{stack_awap}
 \title{Code to build a raster stack from AWAP grids for use in further analyses.}
 \usage{
-stack_awap(loc_dir = NULL, bbox = NULL,
-  stack_proj = c("+init=epsg:28355"), start_date = "20120131",
-  variable = "FWDis", sequence = "monthly", stat = "raw")
+stack_awap(bbox = NULL, stack_proj = c("+init=epsg:28355"),
+  start_date = "20120131", variable = "FWDis", sequence = "monthly",
+  stat = "raw")
 }
 \arguments{
-\item{loc_dir}{The local directory in wich the AWAP zip files are stored
-If not specified, the function looks for the folder '/AWAP/Run26j/FWDis/'
-within the local working directory.}
-
 \item{bbox}{A list of coordinates defining a subregion for the raster stack}
 
 \item{stack_proj}{A projection definition for the final projected raster stack}
+
+\item{start_date}{The first month in the AWAP series to inlcude in the stack. If
+only interested in recent years, this will greatly improve the efficiciency.}
+
+\item{variable}{The AWAP variable to extract data for.}
+
+\item{sequence}{Monthly or Annual series}
+
+\item{stat}{Build a stack of the raw data or the percentile sequence (by monthly only).}
 }
 \value{
 A raster stack of CSIRO AWAP files, stacked by date.
@@ -24,19 +29,19 @@ A raster stack of CSIRO AWAP files, stacked by date.
 Code to build a raster stack from AWAP grids for use in further analyses.
 }
 \note{
-The individual zip files are stacked from a directory inside the working
-directory specfiied above (see AWAP_download for more details).
+The function assumes the awap data files are in the directory raw_awap_data, which is
+a subdirectory of the working directory from which the function is being run (see download_awap for more details).
 }
 \examples{
 Define a bounding box for the city of Melbourne, Australia and surrounds
 melb <- list(x = c(144.0000, 146.5000), y = c(-39.0000, -37.0000))
-stack_awap(bbox=melb, start='20130131')
+stack_awap(bbox=melb, start_date='20130131', seq="monthly")
 South-east Queensland
 seqld <- list(x = c(149, 154.000), y = c(-21.0000, -29.0000))
-seq_awap <- stack_awap(bbox=seq, start='20130131')
+seq_awap <- stack_awap(bbox=seqld, start_date='20130131')
 writeRaster(seq_awap, filename='seq_awap.grd', bandorder='BIL', overwrite=TRUE)
 vic <- list(x = c(141.0, 150.2), y = c(-34.0, -39.2))
-vic_awap <- stack_awap(bbox=vic, start='19900131')
+vic_awap <- stack_awap(bbox=vic, start_date='19900131')
 writeRaster(vic_awap, filename='vic_awap_1990_2014.grd', bandorder='BIL', overwrite=TRUE)
 }
 
