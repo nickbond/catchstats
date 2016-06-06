@@ -24,8 +24,8 @@ download_awap <- function() {
     op_grid_names <- op_grid_names[grepl("2015|2016", op_grid_names)]
     op_grid_names <- op_grid_names[grepl(".flt", op_grid_names)]
 
-    hist_grids_to_dwnld <- setdiff(hist_grid_names, local_file_names)
-    op_grids_to_dwnld <- setdiff(op_grid_names, local_file_names)
+    hist_grids_to_dwnld <- gsub("\\r", "", setdiff(hist_grid_names, local_file_names))
+    op_grids_to_dwnld <- gsub("\\r", "", setdiff(op_grid_names, local_file_names))
 
     # Download all the files and unzip them
     if (!dir.exists("awap_zip_files")) {
