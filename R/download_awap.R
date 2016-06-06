@@ -17,8 +17,8 @@ download_awap <- function() {
 
     local_file_names <- list.files(path = file.path("awap_zip_files"), pattern = "\\.flt.zip")
 
-    hist_remote_file_names <- getURL("ftp://ftp.eoc.csiro.au/pub/awap/Australia_historical/Run26j/FWDis/", verbose = TRUE, dirlistonly = TRUE, ftp.use.epsv = TRUE)
-    op_remote_file_names <- getURL("ftp://ftp.eoc.csiro.au/pub/awap/Australia_operational_v26/monthly/", verbose = TRUE, dirlistonly = TRUE, ftp.use.epsv = TRUE)
+    hist_remote_file_names <- RCurl::getURL("ftp://ftp.eoc.csiro.au/pub/awap/Australia_historical/Run26j/FWDis/", verbose = TRUE, dirlistonly = TRUE, ftp.use.epsv = TRUE)
+    op_remote_file_names <- RCurl::getURL("ftp://ftp.eoc.csiro.au/pub/awap/Australia_operational_v26/monthly/", verbose = TRUE, dirlistonly = TRUE, ftp.use.epsv = TRUE)
     hist_grid_names <- unlist(strsplit(hist_remote_file_names, "\n"))
     op_grid_names <- unlist(strsplit(op_remote_file_names, "\n"))
     op_grid_names <- op_grid_names[grepl("2015|2016", op_grid_names)]
@@ -35,13 +35,13 @@ download_awap <- function() {
     if(length(hist_grids_to_dwnld>1)) {
     for (i in 1:length(hist_grids_to_dwnld)) {
 
-        download.file(file.path("ftp.eoc.csiro.au","pub","awap","Australia_historical","Run26j","FWDis", hist_grids_to_dwnld[i]), destfile = file.path("awap_zip_files", hist_grids_to_dwnld[i]))
+        download.file(file.path("ftp.eoc.csiro.au","pub","awap","Australia_historical","Run26j","FWDis", hist_grids_to_dwnld[i]), destfile = file.path("awap_zip_files", hist_grids_to_dwnld[i]), method="libcurl")
     }
     }
 
     if(length(op_grids_to_dwnld>1)) {
     for (i in 1:length(op_grids_to_dwnld)) {
-      download.file(file.path("ftp.eoc.csiro.au","pub","awap","Australia_operational_v26","monthly", op_grids_to_dwnld[i]), destfile = file.path("awap_zip_files", op_grids_to_dwnld[i]))
+      download.file(file.path("ftp.eoc.csiro.au","pub","awap","Australia_operational_v26","monthly", op_grids_to_dwnld[i]), destfile = file.path("awap_zip_files", op_grids_to_dwnld[i]), method="libcurl")
     }
     }
 
