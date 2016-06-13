@@ -35,7 +35,7 @@ stack_awap <- function(bbox = NULL, stack_proj = c("+init=epsg:28355"), start_da
   #  }
 
     # We want the flt files
-    hdr_files <- list.files(path="awap_raw_data/", pattern = "\\.flt$")
+    hdr_files <- list.files(path=file.path("awap_raw_data"), pattern = "\\.flt$")
     # get the files pertaining to the variable of interest
     hdr_files_var <- hdr_files[grepl(variable, hdr_files)]
     if (stat == "raw") {
