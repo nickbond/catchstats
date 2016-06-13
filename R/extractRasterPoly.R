@@ -33,7 +33,7 @@ extractRasterPoly <- function(shpfile, rast, catid_col, start = 1, end = nrow(sh
 
     for (i in 1:length(shpfile)) {
         poly <- shpfile[i, ]
-        loc.values[[i]] <- extract(rast, poly, fun = "mean", na.rm = T, weights = TRUE, normalizeWeights = TRUE, small = TRUE)
+        loc.values[[i]] <- raster::extract(rast, poly, na.rm = T, weights = TRUE, fun = "mean", normalizeWeights = TRUE, small = TRUE)
         print(i)
     }
 
