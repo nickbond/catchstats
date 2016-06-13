@@ -11,7 +11,7 @@
 #' @param end. The last polygon in the shapfile to be intersected.
 #' @param loc.cat.df A dataframe containing values for individual subcatchments to aggreagte - produced by running aggRasterPoly.
 #' If provided, there is no need to specify the raster layer, although the shapefile is still required to produce the catchment hierarchy.
-#' @param fun The aggregation function - 'average', 'accumulate', 'area_sum'. The former would typically be used for variables such as temperature,
+#' @param fun The aggregation function - 'average', 'accumulate', 'area_sum'. The former would typically be used for variables such as rainfall,
 #'  whereas number of survey sites might be summed ('accumulate'), while runoff might be accumulated as runoff volume (mm/km^2 * catchment area)
 #'  by taking into account sub-catchment areas using 'area_sum'.
 #' @return a dataframe of area-weighted or summed values derived from all sub-catchments contributing to each catchment.
@@ -27,43 +27,43 @@
 
 
 aggRasterPoly <- function(shpfile, rast = NULL, catid_col, nextds_col, catarea_col, reporting_cats = NULL, start = 1, end = nrow(shpfile), loc.cat.df = NULL, fun = NULL) {
-    
+
     if (is.null(fun)) {
-        stop("Please select the catchment aggregation function (\"average\" or \"accumulate\")")
+        stop("Please select the catchment aggregation function (\"average\", \"accumulate\" or \"area_sum\")")
     }
-    
+
     data <- slot(shpfile, "data")
-    
+
     if (is.null(reporting_cats)) {
         reporting_cats <- data[[catid_col]][start:end]
     }
-    
+
     hierarchy <- data.frame(site = data[[catid_col]], nextds = data[[nextds_col]], scarea = data[[catarea_col]])
     lst <- list_all_upstream(hierarchy, catchnames = reporting_cats)
-    
-    
-    
+
+
+
     if (is.null(loc.cat.df)) {
-        
+
         loc.cat.df <- extractRasterPoly(shpfile, rast, catid_col = catid_col, start = start, end = end)
-        
+
     }
-    
+
     all.agg.output <- matrix(nrow = nrow(loc.cat.df), ncol = length(reporting_cats), dimnames = list(row.names(loc.cat.df), reporting_cats))
-    
-    
-    
+
+
+
     for (j in 1:length(lst)) {
         subs <- na.omit(names(loc.cat.df)[match(lst[[j]], names(loc.cat.df))])
-        
+
         df.subs <- loc.cat.df[, names(loc.cat.df) %in% subs]
-        
+
         if (unique(lapply(df.subs, is.null)) == TRUE) {
             all.agg.output[, j] <- NA
         } else {
-            
-            
-            
+
+
+
             if (fun == "accumulate") {
                 if (!is.vector(df.subs)) {
                   # get the sub-catchment areas df.subs.careas<-hierarchy[match(subs, hierarchy$site),'scarea'] df.subs.accum<-t(t(df.subs)*df.subs.careas)
@@ -73,7 +73,7 @@ aggRasterPoly <- function(shpfile, rast = NULL, catid_col, nextds_col, catarea_c
                   all.agg.output[, j] <- unlist(df.subs)
                 }
             }
-            
+
             if (fun == "area_sum") {
                 if (!is.vector(df.subs)) {
                   # get the sub-catchment areas
@@ -82,29 +82,28 @@ aggRasterPoly <- function(shpfile, rast = NULL, catid_col, nextds_col, catarea_c
                   df.subs.area.accum <- t(t(df.subs) * df.subs.careas)
                   all.agg.output[, j] <- rowSums(df.subs.area.accum, na.rm = T)
                 } else {
-                  
+
                   df.subs.carea <- hierarchy[match(subs, hierarchy$site), "scarea"]  #Note a single area only here as just 1 catchment.
                   all.agg.output[, j] <- unlist(df.subs) * df.subs.carea
                 }
             }
-            
+
             if (fun == "average") {
-                
                 if (!is.vector(df.subs)) {
                   df.subs.careas <- hierarchy[match(subs, hierarchy$site), "scarea"]
                   df.subs.rel.careas <- df.subs.careas/sum(df.subs.careas, na.rm = T)
-                  
+
                   df.subs.area.weighted.vals <- t(t(df.subs) * df.subs.rel.careas)
-                  all.agg.output[, j] <<- rowSums(df.subs.area.weighted.vals, na.rm = T)
+                  all.agg.output[, j] <- rowSums(df.subs.area.weighted.vals, na.rm = T)
                 } else {
-                  all.agg.output[, j] <<- unlist(df.subs)
+                  all.agg.output[, j] <- unlist(df.subs)
                 }
             }
-            
-            
+
+
         }
     }
-    
+
     # all.agg.output <- round(all.agg.output)
     return(as.data.frame(all.agg.output))
 }
