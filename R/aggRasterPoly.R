@@ -90,7 +90,7 @@ aggRasterPoly <- function(shpfile, rast = NULL, catid_col, nextds_col, nextds2_c
         all.agg.output[, j] <- rowSums(df.subs.area.accum, na.rm = T)
 
       } else {
-        df.subs.carea <- hierarchy[match(names(df.subs), hierarchy$site), 'scarea']  #Note a single area only here as just 1 catchment.
+        df.subs.carea <- hierarchy[match(subs), hierarchy$site), 'scarea']  #Note a single area only here as just 1 catchment.
         all.agg.output[, j] <- unlist(df.subs) * df.subs.carea
       }
     } else if (fun == "average") {
