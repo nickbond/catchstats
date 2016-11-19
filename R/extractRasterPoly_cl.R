@@ -10,7 +10,7 @@
 #'
 #' @examples
 #'
-#' #' library(parallel)
+#' library(parallel)
 #' no_cores=detectCores()-1
 #'
 #' #Define a bounding box for the city of Melbourne, Australia and surrounds
