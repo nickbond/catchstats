@@ -44,7 +44,7 @@ The function can be used to extract values from a raster layer (or stack) or be 
 }
 \examples{
 
-Need to complete with appropriate shapefile.
+#Need to complete with appropriate shapefile.
 
 
 }
