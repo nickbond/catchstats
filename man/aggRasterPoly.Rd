@@ -4,8 +4,8 @@
 \alias{aggRasterPoly}
 \title{function to accumulate or calculate average polygon values within a set of upstream catchment polygons.}
 \usage{
-aggRasterPoly(shpfile, rast = NULL, catid_col, nextds_col, catarea_col,
-  reporting_cats = NULL, start = 1, end = nrow(shpfile),
+aggRasterPoly(shpfile, rast = NULL, catid_col, nextds_col, nextds2_col,
+  catarea_col, reporting_cats = NULL, start = 1, end = nrow(shpfile),
   loc.cat.df = NULL, fun = NULL)
 }
 \arguments{
@@ -27,7 +27,7 @@ Defaults to a value of 1 (the first row).}
 \item{loc.cat.df}{A dataframe containing values for individual subcatchments to aggreagte - produced by running aggRasterPoly.
 If provided, there is no need to specify the raster layer, although the shapefile is still required to produce the catchment hierarchy.}
 
-\item{fun}{The aggregation function - 'average', 'accumulate', 'area_sum'. The former would typically be used for variables such as temperature,
+\item{fun}{The aggregation function - 'average', 'accumulate', 'area_sum'. The former would typically be used for variables such as rainfall,
 whereas number of survey sites might be summed ('accumulate'), while runoff might be accumulated as runoff volume (mm/km^2 * catchment area)
 by taking into account sub-catchment areas using 'area_sum'.}
 
