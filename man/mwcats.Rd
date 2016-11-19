@@ -5,7 +5,7 @@
 \alias{mwcats}
 \title{Physiographic and climatic catchment variables}
 \format{A data frame with 12319 rows and 12 variables:
-\describe{
+\itemize{
   \item site. Site code
   \item nextds. Next downstream site code
   \item scstrlen. Subcatchment stream length (km)
