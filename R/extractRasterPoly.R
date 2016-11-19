@@ -9,7 +9,8 @@
 #' @return a dataframe of area-weighted raster values for each polygon.
 #'
 #' @examples
-#' Define a bounding box for the city of Melbourne, Australia and surrounds
+#'
+#' #Define a bounding box for the city of Melbourne, Australia and surrounds
 #' melb <- list(x = c(144.0000, 146.5000), y = c(-39.0000, -37.0000))
 #' awap_stack <- stack_awap(bbox=melb, start='20130131')
 #' vic_cats<-readShapePoly('/Users/nickbond/Data/GIS_Data/Australia/BaseData/Catchments/VIC/VIC_CATCHMENTS.shp')
