@@ -1,4 +1,4 @@
-#' Code to build a raster stack from AWAP grids for use in further analyses.
+#' Parallelized code to build a raster stack from AWAP grids for use in further analyses.
 #'
 #' @param bbox A list of coordinates defining a subregion for the raster stack
 #' @param stack_proj A projection definition for the final projected raster stack
@@ -11,7 +11,10 @@
 #' @note The function assumes the awap data files are in the directory raw_awap_data, which is
 #' a subdirectory of the working directory from which the function is being run (see download_awap for more details).
 #' @examples
-#' Define a bounding box for the city of Melbourne, Australia and surrounds
+#' library(parallel)
+#' no_cores=detectCores()-1
+#'
+#' #Define a bounding box for the city of Melbourne, Australia and surrounds
 #' melb <- list(x = c(144.0000, 146.5000), y = c(-39.0000, -37.0000))
 #' stack_awap(bbox=melb, start_date='20130131', seq="monthly")
 #' South-east Queensland
