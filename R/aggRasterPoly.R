@@ -49,7 +49,7 @@ aggRasterPoly <- function(shpfile, rast = NULL, catid_col, nextds_col, nextds2_c
       for(j in 2:length(lst_2[[i]])){
         values<-lst_2[[i]][j]
         lst[[i]]<-append(lst[[i]],values)
-        lst[[i]]<- unique(lst[[i]])#added unique.
+        lst[[i]]<- unique(lst[[i]]) #added unique.
       }
     }
   }
