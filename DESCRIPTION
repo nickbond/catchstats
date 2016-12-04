@@ -14,9 +14,9 @@ LazyData: TRUE
 RoxygenNote: 5.0.1
 Imports: parallel,
     raster,
-    rgdal,
     stringr,
     maptools,
     methods,
     lubridate,
     RCurl
+Depends: rgdal

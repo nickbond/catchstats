@@ -16,7 +16,7 @@ extractRasterPoly(shpfile, rast, catid_col, start = 1, end = nrow(shpfile))
 \item{start}{the first polygon in the shapefile to be used for intersection
 Defaults to a value of 1 (the first row).}
 
-\item{end.}{The last polygon in the shapfile to be intersected.}
+\item{end}{The last polygon in the shapfile to be intersected.}
 }
 \value{
 a dataframe of area-weighted raster values for each polygon.

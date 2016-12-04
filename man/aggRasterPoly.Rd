@@ -6,7 +6,7 @@
 \usage{
 aggRasterPoly(shpfile, rast = NULL, catid_col, nextds_col, nextds2_col,
   catarea_col, reporting_cats = NULL, start = 1, end = nrow(shpfile),
-  loc.cat.df = NULL, fun = NULL)
+  loc_cat_df = NULL, fun = NULL)
 }
 \arguments{
 \item{shpfile}{The shapefile to be used to intersect with the raster layers (optional)}
@@ -17,6 +17,8 @@ aggRasterPoly(shpfile, rast = NULL, catid_col, nextds_col, nextds2_col,
 
 \item{nextds_col}{The field in the shapefile indicating the next downstream catchment. Required for identifying catchments to aggregate.}
 
+\item{nextds2_col}{A second field in the shapefile indicating altnerative next downstream catchment for anabranches. Required for identifying catchments to aggregate.}
+
 \item{catarea_col}{The field containing the catchment areas. This is used for calculating the relative contributing area for weighting values when fun #' ='average'.}
 
 \item{reporting_cats}{A vector of 'sites' etc. to calculate values for. Otherwise defaults to all fields in catid_col. See optional start and end for #'alternative subsetting approach.}
@@ -24,14 +26,14 @@ aggRasterPoly(shpfile, rast = NULL, catid_col, nextds_col, nextds2_col,
 \item{start}{the first polygon in the shapefile to be used for intersection
 Defaults to a value of 1 (the first row).}
 
-\item{loc.cat.df}{A dataframe containing values for individual subcatchments to aggreagte - produced by running aggRasterPoly.
+\item{end}{The last polygon in the shapfile to be intersected.}
+
+\item{loc_cat_df}{A dataframe containing values for individual subcatchments to aggreagte - produced by running aggRasterPoly.
 If provided, there is no need to specify the raster layer, although the shapefile is still required to produce the catchment hierarchy.}
 
 \item{fun}{The aggregation function - 'average', 'accumulate', 'area_sum'. The former would typically be used for variables such as rainfall,
 whereas number of survey sites might be summed ('accumulate'), while runoff might be accumulated as runoff volume (mm/km^2 * catchment area)
 by taking into account sub-catchment areas using 'area_sum'.}
-
-\item{end.}{The last polygon in the shapfile to be intersected.}
 }
 \value{
 a dataframe of area-weighted or summed values derived from all sub-catchments contributing to each catchment.

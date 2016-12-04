@@ -33,10 +33,10 @@ The function assumes the awap data files are in the directory raw_awap_data, whi
 a subdirectory of the working directory from which the function is being run (see download_awap for more details).
 }
 \examples{
-Define a bounding box for the city of Melbourne, Australia and surrounds
+#Define a bounding box for the city of Melbourne, Australia and surrounds
 melb <- list(x = c(144.0000, 146.5000), y = c(-39.0000, -37.0000))
 stack_awap(bbox=melb, start_date='20130131', seq="monthly")
-South-east Queensland
+#South-east Queensland
 seqld <- list(x = c(149, 154.000), y = c(-21.0000, -29.0000))
 seq_awap <- stack_awap(bbox=seqld, start_date='20130131')
 writeRaster(seq_awap, filename='seq_awap.grd', bandorder='BIL', overwrite=TRUE)

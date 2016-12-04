@@ -5,7 +5,7 @@
 #' @param catid_col the catchment id field in the shpfile
 #' @param start the first polygon in the shapefile to be used for intersection
 #' Defaults to a value of 1 (the first row).
-#' @param end. The last polygon in the shapfile to be intersected.
+#' @param end The last polygon in the shapfile to be intersected.
 #' @return a dataframe of area-weighted raster values for each polygon.
 #'
 #' @examples
@@ -23,16 +23,16 @@
 #' plot(awap_stack[[1]])
 #' plot(vic_cats, add=TRUE)
 #'
-#' vic_cats_runoff<-extractRasterPoly(vic_cats, rast=melb_awap, catid_col='BNAME')
+#' vic_cats_runoff<-extractRasterPoly_cl(vic_cats, rast=melb_awap, catid_col='BNAME')
 #'
 #' @export
 
 extractRasterPoly_cl <- function(shpfile, rast, catid_col, start = 1, end = nrow(shpfile)) {
   loc.values <- vector("list", length(start:end))
   shpfile <- shpfile[start:end, ]
-  cl<-makeCluster(no_cores, type="FORK")
-  fits<-parLapplyLB(cl,1:length(shpfile),function(i) loc.values[[i]] <- extract(rast, shpfile[i,], na.rm = T, weights = TRUE, fun = "mean", normalizeWeights = TRUE, small = TRUE))
-  stopCluster(cl)
+  cl<-parallel::makeCluster(no_cores, type="FORK")
+  fits<-parallel::parLapplyLB(cl,1:length(shpfile),function(i) loc.values[[i]] <- raster::extract(rast, shpfile[i,], na.rm = T, weights = TRUE, fun = "mean", normalizeWeights = TRUE, small = TRUE))
+  parallel::stopCluster(cl)
   loc.values.df <- as.data.frame(t(do.call("rbind", fits)))
   names(loc.values.df) <- shpfile@data[, catid_col]
   return(loc.values.df)

@@ -17,7 +17,7 @@ extractRasterPoly_cl(shpfile, rast, catid_col, start = 1,
 \item{start}{the first polygon in the shapefile to be used for intersection
 Defaults to a value of 1 (the first row).}
 
-\item{end.}{The last polygon in the shapfile to be intersected.}
+\item{end}{The last polygon in the shapfile to be intersected.}
 }
 \value{
 a dataframe of area-weighted raster values for each polygon.
@@ -40,7 +40,7 @@ vic_cats <- vic_cats[which(vic_cats@data$BNAME \%in\% c('YARRA RIVER', 'MARIBYRN
 plot(awap_stack[[1]])
 plot(vic_cats, add=TRUE)
 
-vic_cats_runoff<-extractRasterPoly(vic_cats, rast=melb_awap, catid_col='BNAME')
+vic_cats_runoff<-extractRasterPoly_cl(vic_cats, rast=melb_awap, catid_col='BNAME')
 
 }
 

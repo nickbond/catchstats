@@ -5,7 +5,7 @@
 #' @param catid_col the catchment id field in the shpfile
 #' @param start the first polygon in the shapefile to be used for intersection
 #' Defaults to a value of 1 (the first row).
-#' @param end. The last polygon in the shapfile to be intersected.
+#' @param end The last polygon in the shapfile to be intersected.
 #' @return a dataframe of area-weighted raster values for each polygon.
 #'
 #' @examples

@@ -11,10 +11,10 @@
 #' @note The function assumes the awap data files are in the directory raw_awap_data, which is
 #' a subdirectory of the working directory from which the function is being run (see download_awap for more details).
 #' @examples
-#' Define a bounding box for the city of Melbourne, Australia and surrounds
+#' #Define a bounding box for the city of Melbourne, Australia and surrounds
 #' melb <- list(x = c(144.0000, 146.5000), y = c(-39.0000, -37.0000))
 #' stack_awap(bbox=melb, start_date='20130131', seq="monthly")
-#' South-east Queensland
+#' #South-east Queensland
 #' seqld <- list(x = c(149, 154.000), y = c(-21.0000, -29.0000))
 #' seq_awap <- stack_awap(bbox=seqld, start_date='20130131')
 #' writeRaster(seq_awap, filename='seq_awap.grd', bandorder='BIL', overwrite=TRUE)
@@ -77,7 +77,7 @@ stack_awap <- function(bbox = NULL, stack_proj = c("+init=epsg:28355"), start_da
     # get the bounding box?
     bound_box <- NULL
     if (length(bbox) > 1) {
-        bound_box <- extent(bbox)
+        bound_box <- raster::extent(bbox)
     }
     # Set unprojected reference system WGS84
     unref <- CRS("+init=epsg:4326")
@@ -93,12 +93,12 @@ stack_awap <- function(bbox = NULL, stack_proj = c("+init=epsg:28355"), start_da
         # Nick recons the best approach is to 1 read in and clip the raster 2 reproject 3 add to raster stack 4 save raster stack
 
         # Read in the raster
-        loop_raster <- raster(paste0("awap_raw_data/", hdr_files_to_stack[final_name_files_correct_order[i]]))
+        loop_raster <- raster::raster(paste0("awap_raw_data/", hdr_files_to_stack[final_name_files_correct_order[i]]))
 
 
         # Crop it based on bbox extent (if specified)
         if (!is.null(bound_box)) {
-            loop_raster <- crop(loop_raster, bound_box)
+            loop_raster <- raster::crop(loop_raster, bound_box)
         }
 
         # define WGS84 for cropped raster
@@ -106,17 +106,17 @@ stack_awap <- function(bbox = NULL, stack_proj = c("+init=epsg:28355"), start_da
 
 
         # reproject the raster to defined proj rast_proj
-        proj_raster <- projectRaster(from = loop_raster, crs = stack_proj, method = "bilinear")
+        proj_raster <- raster::projectRaster(from = loop_raster, crs = stack_proj, method = "bilinear")
 
 
 
         # best to disaggregate the raster, to make sure that the weights work so that it does not round some weights to zero
         if(i==1) {
-          proj_raster <- disaggregate(proj_raster, fact=5)
+          proj_raster <- raster::disaggregate(proj_raster, fact=5)
         } else {
         # rename, might fix names(proj_raster) <- paste('val_D', i, sep ='')
 
-          proj_raster <- resample(proj_raster, list_raster[[i-1]])
+          proj_raster <- raster::resample(proj_raster, list_raster[[i-1]])
         }
 
         # assign file name file_name <- paste(wd, '/awap_raster/awap_raster', i, '.Rdata', sep = '')
@@ -136,7 +136,7 @@ stack_awap <- function(bbox = NULL, stack_proj = c("+init=epsg:28355"), start_da
     }
 
     # build the stack now
-    awap_stack <- stack(list_raster)
+    awap_stack <- raster::stack(list_raster)
  #   setwd(wd)
     return(awap_stack)
 }

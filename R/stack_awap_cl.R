@@ -7,26 +7,28 @@
 #' @param variable The AWAP variable to extract data for.
 #' @param sequence Monthly or Annual series
 #' @param stat Build a stack of the raw data or the percentile sequence (by monthly only).
+#' @param no_cores The number of parallel cores to use.
 #' @return A raster stack of CSIRO AWAP files, stacked by date.
 #' @note The function assumes the awap data files are in the directory raw_awap_data, which is
 #' a subdirectory of the working directory from which the function is being run (see download_awap for more details).
 #' @examples
+#'
 #' library(parallel)
 #' no_cores=detectCores()-1
 #'
 #' #Define a bounding box for the city of Melbourne, Australia and surrounds
 #' melb <- list(x = c(144.0000, 146.5000), y = c(-39.0000, -37.0000))
-#' stack_awap(bbox=melb, start_date='20130131', seq="monthly")
-#' South-east Queensland
+#' stack_awap_cl(bbox=melb, start_date='20130131', seq="monthly")
+#' #South-east Queensland
 #' seqld <- list(x = c(149, 154.000), y = c(-21.0000, -29.0000))
-#' seq_awap <- stack_awap(bbox=seqld, start_date='20130131')
+#' seq_awap <- stack_awap_cl(bbox=seqld, start_date='20130131')
 #' writeRaster(seq_awap, filename='seq_awap.grd', bandorder='BIL', overwrite=TRUE)
 #' vic <- list(x = c(141.0, 150.2), y = c(-34.0, -39.2))
 #' vic_awap <- stack_awap(bbox=vic, start_date='19900131')
 #' writeRaster(vic_awap, filename='vic_awap_1990_2014.grd', bandorder='BIL', overwrite=TRUE)
 #' @export
 
-stack_awap_cl <- function(bbox = NULL, stack_proj = c("+init=epsg:4326"), start_date = "20120131", variable = "FWDis", sequence = "monthly", stat = "raw") {
+stack_awap_cl <- function(bbox = NULL, stack_proj = c("+init=epsg:4326"), start_date = "20120131", variable = "FWDis", sequence = "monthly", stat = "raw", no_cores=parallel::detectCores()-1) {
   if (is.null(bbox))
     stop("please specify a bounding box or specify 'none' for the whole country")
 
@@ -62,7 +64,7 @@ stack_awap_cl <- function(bbox = NULL, stack_proj = c("+init=epsg:4326"), start_
   }
   bound_box <- NULL
   if (length(bbox) > 1) {
-    bound_box <- extent(bbox)
+    bound_box <- raster::extent(bbox)
   }
   # Set unprojected reference system WGS84
   unref <- CRS("+init=epsg:4326")
@@ -72,32 +74,32 @@ stack_awap_cl <- function(bbox = NULL, stack_proj = c("+init=epsg:4326"), start_
   end = length(final_name_files_correct_order)
   final_name_files_correct_order <- final_name_files_correct_order[start:end]
 
-  loop_raster <- raster(paste0("awap_raw_data/", hdr_files_to_stack[final_name_files_correct_order[1]]))
+  loop_raster <- raster::raster(paste0("awap_raw_data/", hdr_files_to_stack[final_name_files_correct_order[1]]))
   if (!is.null(bound_box)) {
-    loop_raster <- crop(loop_raster, bound_box)
+    loop_raster <- raster::crop(loop_raster, bound_box)
   }
   proj4string(loop_raster) <- unref
-  proj_raster <- projectRaster(from = loop_raster, crs = CRS("+init=epsg:4326"), method = "bilinear")
-  proj_raster <- disaggregate(proj_raster, fact=5)
+  proj_raster <- raster::projectRaster(from = loop_raster, crs = CRS("+init=epsg:4326"), method = "bilinear")
+  proj_raster <- raster::disaggregate(proj_raster, fact=5)
   list_raster[[1]] <- proj_raster
 
-  cl<-makeCluster(no_cores, type = "FORK")
+  cl<-parallel::makeCluster(no_cores, type = "FORK")
 
-  stack_list<-parLapply(cl,1:length(final_name_files_correct_order),function(i) {
-    loop_raster <- raster(paste0("awap_raw_data/", hdr_files_to_stack[final_name_files_correct_order[i]]))
+  stack_list<-parallel::parLapply(cl,1:length(final_name_files_correct_order),function(i) {
+    loop_raster <- raster::raster(paste0("awap_raw_data/", hdr_files_to_stack[final_name_files_correct_order[i]]))
     if (!is.null(bound_box)) {
-      loop_raster <- crop(loop_raster, bound_box)
+      loop_raster <- raster::crop(loop_raster, bound_box)
     }
     proj4string(loop_raster) <- unref
-    proj_raster <- projectRaster(from = loop_raster, crs = CRS("+init=epsg:4326"), method = "bilinear")
+    proj_raster <- raster::projectRaster(from = loop_raster, crs = CRS("+init=epsg:4326"), method = "bilinear")
     if(i==1){
-    proj_raster <- disaggregate(proj_raster, fact=5)
+    proj_raster <- raster::disaggregate(proj_raster, fact=5)
     }else{
-    proj_raster <- resample(proj_raster, list_raster[[1]])
+    proj_raster <- raster::resample(proj_raster, list_raster[[1]])
     }
     list_raster[[i]] <- proj_raster
   })
-  stopCluster(cl)
-  awap_stack<-stack(stack_list)
+  parallel::stopCluster(cl)
+  awap_stack<-raster::stack(stack_list)
   return(awap_stack)
 }

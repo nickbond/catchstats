@@ -6,7 +6,7 @@
 \usage{
 stack_awap_cl(bbox = NULL, stack_proj = c("+init=epsg:4326"),
   start_date = "20120131", variable = "FWDis", sequence = "monthly",
-  stat = "raw")
+  stat = "raw", no_cores = parallel::detectCores() - 1)
 }
 \arguments{
 \item{bbox}{A list of coordinates defining a subregion for the raster stack}
@@ -21,6 +21,8 @@ only interested in recent years, this will greatly improve the efficiciency.}
 \item{sequence}{Monthly or Annual series}
 
 \item{stat}{Build a stack of the raw data or the percentile sequence (by monthly only).}
+
+\item{no_cores}{The number of parallel cores to use.}
 }
 \value{
 A raster stack of CSIRO AWAP files, stacked by date.
@@ -33,15 +35,16 @@ The function assumes the awap data files are in the directory raw_awap_data, whi
 a subdirectory of the working directory from which the function is being run (see download_awap for more details).
 }
 \examples{
+
 library(parallel)
 no_cores=detectCores()-1
 
 #Define a bounding box for the city of Melbourne, Australia and surrounds
 melb <- list(x = c(144.0000, 146.5000), y = c(-39.0000, -37.0000))
-stack_awap(bbox=melb, start_date='20130131', seq="monthly")
-South-east Queensland
+stack_awap_cl(bbox=melb, start_date='20130131', seq="monthly")
+#South-east Queensland
 seqld <- list(x = c(149, 154.000), y = c(-21.0000, -29.0000))
-seq_awap <- stack_awap(bbox=seqld, start_date='20130131')
+seq_awap <- stack_awap_cl(bbox=seqld, start_date='20130131')
 writeRaster(seq_awap, filename='seq_awap.grd', bandorder='BIL', overwrite=TRUE)
 vic <- list(x = c(141.0, 150.2), y = c(-34.0, -39.2))
 vic_awap <- stack_awap(bbox=vic, start_date='19900131')

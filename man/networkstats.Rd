@@ -4,16 +4,24 @@
 \alias{networkstats}
 \title{summarise river network character between site pairs}
 \usage{
-networkstats(site1, site2, FUN = "max", env.vars = NULL)
+networkstats(site1, site2, cat_data, catid_col, nextds_col, env_vars, FUN, ...)
 }
 \arguments{
 \item{site1}{a vector of sites for which all pairs are sought}
 
 \item{site2}{a second vector of sites for which all pairs are sought}
 
+\item{cat_data}{the name of the dataframe containing the catchment data}
+
+\item{catid_col}{the column containing the catchment ids}
+
+\item{nextds_col}{the column containing the next downstream catchment ids}
+
+\item{env_vars}{quoted vector of environmental variables for which summary stats are required}
+
 \item{FUN}{quoted scalar function to apply to env.vars (e.g. 'sum')}
 
-\item{env.vars}{environmental variables for which summary stats are required}
+\item{...}{additional arguments to FUN}
 }
 \value{
 a dataframe with site pairs and network characteristics
@@ -25,9 +33,9 @@ summarise river network character between site pairs
 ...
 }
 \examples{
-#data(mwcats)
+data(mwcats)
 
-#all_pairs(mwcats$site[1:5])
+all_pairs(mwcats$site[1:5])
 
 }
 
