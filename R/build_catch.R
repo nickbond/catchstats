@@ -7,7 +7,7 @@
 #' @return?
 #' @note?
 #' @examples
-#'data(mwcats)
+#'#data(mwcats)
 #'
 #'#to be added.
 #'

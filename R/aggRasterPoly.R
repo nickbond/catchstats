@@ -4,12 +4,13 @@
 #' @param rast The raster layer(s) to be intersected
 #' @param catid_col The field in the shapefile with the catchment ID values (e.g. 'site', 'SEGMENTNO')
 #' @param nextds_col The field in the shapefile indicating the next downstream catchment. Required for identifying catchments to aggregate.
+#' @param nextds2_col A second field in the shapefile indicating altnerative next downstream catchment for anabranches. Required for identifying catchments to aggregate.
 #' @param catarea_col The field containing the catchment areas. This is used for calculating the relative contributing area for weighting values when fun #' ='average'.
 #' @param reporting_cats A vector of 'sites' etc. to calculate values for. Otherwise defaults to all fields in catid_col. See optional start and end for #'alternative subsetting approach.
 #' @param start the first polygon in the shapefile to be used for intersection
 #' Defaults to a value of 1 (the first row).
-#' @param end. The last polygon in the shapfile to be intersected.
-#' @param loc.cat.df A dataframe containing values for individual subcatchments to aggreagte - produced by running aggRasterPoly.
+#' @param end The last polygon in the shapfile to be intersected.
+#' @param loc_cat_df A dataframe containing values for individual subcatchments to aggreagte - produced by running aggRasterPoly.
 #' If provided, there is no need to specify the raster layer, although the shapefile is still required to produce the catchment hierarchy.
 #' @param fun The aggregation function - 'average', 'accumulate', 'area_sum'. The former would typically be used for variables such as rainfall,
 #'  whereas number of survey sites might be summed ('accumulate'), while runoff might be accumulated as runoff volume (mm/km^2 * catchment area)
@@ -18,7 +19,7 @@
 #'
 #' @examples
 #'
-#' Need to complete with appropriate shapefile.
+#' #Need to complete with appropriate shapefile.
 #'
 #'
 #' @export
@@ -26,13 +27,13 @@
 
 
 
-aggRasterPoly <- function(shpfile, rast = NULL, catid_col, nextds_col, nextds2_col,catarea_col, reporting_cats = NULL, start = 1, end = nrow(shpfile), loc.cat.df = NULL, fun = NULL) {
+aggRasterPoly <- function(shpfile, rast = NULL, catid_col, nextds_col, nextds2_col,catarea_col, reporting_cats = NULL, start = 1, end = nrow(shpfile), loc_cat_df = NULL, fun = NULL) {
 
   if (is.null(fun)) {
     stop("Please select the catchment aggregation function (\"average\", \"accumulate\" or \"area_sum\")")
   }
 
-  data <- slot(shpfile, "data")
+  data <- methods::slot(shpfile, "data")
 
   if (is.null(reporting_cats)) {
     reporting_cats <- data[[catid_col]][start:end]
@@ -55,21 +56,21 @@ aggRasterPoly <- function(shpfile, rast = NULL, catid_col, nextds_col, nextds2_c
   }
 
 
-  if (is.null(loc.cat.df)) {
+  if (is.null(loc_cat_df)) {
 
-    loc.cat.df <- extractRasterPoly(shpfile, rast, catid_col = catid_col, start = start, end = end)
+    loc_cat_df <- extractRasterPoly(shpfile, rast, catid_col = catid_col, start = start, end = end)
 
   }
 
-  all.agg.output <- matrix(nrow = nrow(loc.cat.df), ncol = length(reporting_cats), dimnames = list(row.names(loc.cat.df), reporting_cats))
+  all.agg.output <- matrix(nrow = nrow(loc_cat_df), ncol = length(reporting_cats), dimnames = list(row.names(loc_cat_df), reporting_cats))
 
 
 
   for (j in 1:length(lst)) {
-    subs <- na.omit(names(loc.cat.df)[match(lst[[j]], names(loc.cat.df))])
+    subs <- stats::na.omit(names(loc_cat_df)[match(lst[[j]], names(loc_cat_df))])
     #subs<-sort(subs,decreasing = FALSE)
 
-    df.subs <- loc.cat.df[, names(loc.cat.df) %in% subs]
+    df.subs <- loc_cat_df[, names(loc_cat_df) %in% subs]
 
     if (unique(lapply(df.subs, is.null)) == TRUE) {
       all.agg.output[, j] <- NA

@@ -17,5 +17,6 @@ Imports: parallel,
     rgdal,
     stringr,
     maptools,
+    methods,
     lubridate,
     RCurl

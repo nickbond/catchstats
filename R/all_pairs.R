@@ -11,7 +11,7 @@
 #' @export
 
 all_pairs <- function(sites) {
-    out <- as.data.frame(t(combn(sites, 2, simplify = TRUE)))
+    out <- as.data.frame(t(utils::combn(sites, 2, simplify = TRUE)))
     # names(out)<-c('site1', 'site2')
     return(out)
 }
