@@ -1,4 +1,4 @@
-#' returns list of subcatchments between 2 subcatchments on the same river
+#' returns list of subcatchments between 2 subcatchments on the same river ordered upstream to downstream
 #'
 #' @param hierarchy a dataframe containing catchment id and next downstream (nextds) id fields.
 #' Hierarchy must have fields 'site' and 'nextds'
@@ -10,7 +10,8 @@
 #' @note riverdist, if used, should be the column number of the riverdistance
 #' measure in hierarchy.
 #' Returns the following error if downstream is not downstream of upstream:
-# 'Error in while (y != downstream) { : argument is of length zero'
+#' Error in while (y != downstream) { : argument is of length zero'
+#' Note that unlike pairReaches riverreach preserves ordering but cannot trace down and then up tributaries.
 #' @examples
 #'data(mwcats)
 #'#function needs checking.
