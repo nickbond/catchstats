@@ -2,7 +2,7 @@
 % Please edit documentation in R/riverreach.R
 \name{riverreach}
 \alias{riverreach}
-\title{returns list of subcatchments between 2 subcatchments on the same river}
+\title{returns list of subcatchments between 2 subcatchments on the same river ordered upstream to downstream}
 \usage{
 riverreach(hierarchy, upstream, downstream, riverdist = NULL)
 }
@@ -21,12 +21,7 @@ Returns list of subcatchments between 2 subcatchments
 on the same river.
 }
 \description{
-returns list of subcatchments between 2 subcatchments on the same river
-}
-\note{
-riverdist, if used, should be the column number of the riverdistance
-measure in hierarchy.
-Returns the following error if downstream is not downstream of upstream:
+returns list of subcatchments between 2 subcatchments on the same river ordered upstream to downstream
 }
 \examples{
 data(mwcats)
