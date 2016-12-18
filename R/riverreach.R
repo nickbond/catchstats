@@ -10,7 +10,7 @@
 #' @note riverdist, if used, should be the column number of the riverdistance
 #' measure in hierarchy.
 #' Returns the following error if downstream is not downstream of upstream:
-#' Error in while (y != downstream) { : argument is of length zero'
+#' Error in while (y != downstream) { : argument is of length zero' }
 #' Note that unlike pairReaches riverreach preserves ordering but cannot trace down and then up tributaries.
 #' @examples
 #'data(mwcats)
@@ -21,18 +21,19 @@
 #'
 riverreach <- function(hierarchy, upstream, downstream, riverdist = NULL) {
 
-    x <- y <- upstream
+  names(hierarchy) <- c("site", "nextds")
+  x <- y <- upstream
+  if (!is.null(riverdist))
+    rd <- hierarchy[hierarchy$site == x, riverdist]
+  while (y != downstream) {
+    y <- unique(hierarchy$nextds[hierarchy$site == y])
+    if (identical(y, character(0)) | identical(y, integer(0)) == TRUE) {
+      cat("upstream value,", upstream, ", not upstream of downstream value,", downstream, ".\n")
+    } else x <- c(x, y)
     if (!is.null(riverdist))
-        rd <- hierarchy[hierarchy$site == x, riverdist]
-    while (y != downstream) {
-        y <- hierarchy$nextds[hierarchy$site == y]
-        if (identical(y, character(0)) == TRUE) {
-            cat("upstream value,", upstream, ", not upstream of downstream value,", downstream, ".\n")
-        } else x <- c(x, y)
-        if (!is.null(riverdist))
-            rd <- c(rd, hierarchy[hierarchy$site == y, riverdist])
-    }
-    if (!is.null(riverdist))
-        x <- data.frame(reach = x, riverdist = rd)
-    x
+  	rd <- c(rd, hierarchy[hierarchy$site == y, riverdist])
+  }
+  if (!is.null(riverdist))
+    x <- data.frame(reach = x, riverdist = rd)
+  x
 }

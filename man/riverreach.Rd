@@ -23,6 +23,13 @@ on the same river.
 \description{
 returns list of subcatchments between 2 subcatchments on the same river ordered upstream to downstream
 }
+\note{
+riverdist, if used, should be the column number of the riverdistance
+measure in hierarchy.
+Returns the following error if downstream is not downstream of upstream:
+Error in while (y != downstream) { : argument is of length zero' }
+Note that unlike pairReaches riverreach preserves ordering but cannot trace down and then up tributaries.
+}
 \examples{
 data(mwcats)
 #function needs checking.
