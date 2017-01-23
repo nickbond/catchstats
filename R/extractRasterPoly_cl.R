@@ -10,7 +10,9 @@
 #'
 #' @examples
 #'
-#' Before running this cript, make sure that you are using a mac and have run the following two lines of scripts:
+#' #Note the code below will only work on Mac/Unix based systems.
+#' #Other implementations of the parallel processors (e.g. PSOCK) may work on Windows but are untested.
+#' #The following to lines are required to initiate the parallel processors
 #' 
 #' library(parallel)
 #' no_cores=detectCores()-1
