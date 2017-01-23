@@ -22,6 +22,8 @@
 
 list_all_upstream_cl <- function(hierarchy, catchnames) {
 
+  names(hierarchy) <- c("site", "nextds")
+
   all.us.sites <- vector("list", length(catchnames))
   cl<-makeCluster(no_cores, type = "FORK")
   sites_cl<-parLapplyLB(cl,1:length(catchnames),function(i){

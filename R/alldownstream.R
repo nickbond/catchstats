@@ -9,7 +9,6 @@
 #' of a vector of sites. This can then be used to support further aggregation of environmental variables
 #' for sub-catchments downstream of a list of catchments of interest (e.g. for calculating barrier numbers).
 #' @examples
-#'#'data(mwcats)
 #'
 #'#find all sites downstream of the first site in the catchment list
 #'data(mwcats)
@@ -18,6 +17,9 @@
 #' @export
 
 alldownstream <- function(hierarchy, catchname) {
+
+  names(hierarchy) <- c("site", "nextds")
+
     if (length(which(hierarchy$site == catchname)) > 0) {
         catchname <- as.vector(catchname)
         allsc <- as.vector(hierarchy$nextds[hierarchy$site == catchname])

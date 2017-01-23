@@ -18,6 +18,9 @@
 #' @export
 
 allupstream <- function(hierarchy, catchname) {
+
+  names(hierarchy) <- c("site", "nextds")
+
     if (length(which(hierarchy$site == catchname)) > 0) {
         catchname <- as.vector(catchname)
         allsc <- as.vector(hierarchy$site[hierarchy$nextds == catchname])

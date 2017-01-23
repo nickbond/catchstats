@@ -18,9 +18,11 @@
 #' @export
 
 list_all_upstream <- function(hierarchy, catchnames) {
-    
+
+  names(hierarchy) <- c("site", "nextds")
+
     all.us.sites <- vector("list", length(catchnames))
-    
+
     for (i in 1:length(catchnames)) {
         us.sites <- allupstream(hierarchy, catchnames[i])
         all.us.sites[[i]] <- us.sites
