@@ -25,7 +25,6 @@ of a vector of sites. This can then be used to support further aggregation of en
 for sub-catchments downstream of a list of catchments of interest (e.g. for calculating barrier numbers).
 }
 \examples{
-#'data(mwcats)
 
 #find all sites downstream of the first site in the catchment list
 data(mwcats)
