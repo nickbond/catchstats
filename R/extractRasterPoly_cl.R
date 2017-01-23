@@ -10,6 +10,8 @@
 #'
 #' @examples
 #'
+#' Before running this cript, make sure that you are using a mac and have run the following two lines of scripts:
+#' 
 #' library(parallel)
 #' no_cores=detectCores()-1
 #'
