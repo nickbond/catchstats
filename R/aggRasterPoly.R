@@ -27,10 +27,14 @@
 
 
 
-aggRasterPoly <- function(shpfile, rast = NULL, catid_col, nextds_col, nextds2_col,catarea_col, reporting_cats = NULL, start = 1, end = nrow(shpfile), loc_cat_df = NULL, fun = NULL) {
+aggRasterPoly <- function(shpfile, rast = NULL, catid_col, nextds_col, nextds2_col = NULL, catarea_col, reporting_cats = NULL, start = 1, end = nrow(shpfile), loc_cat_df = NULL, fun = NULL) {
 
   if (is.null(fun)) {
     stop("Please select the catchment aggregation function (\"average\", \"accumulate\" or \"area_sum\")")
+  }
+
+  if(is.null(nextds2_col)) {
+    lst_2 <- NULL
   }
 
   data <- methods::slot(shpfile, "data")
@@ -41,11 +45,15 @@ aggRasterPoly <- function(shpfile, rast = NULL, catid_col, nextds_col, nextds2_c
 
   hierarchy <- data.frame(site = data[[catid_col]], nextds = data[[nextds_col]], scarea = data[[catarea_col]])
   lst <- list_all_upstream(hierarchy, catchnames = reporting_cats)
+
+
+  if (!is.null(nextds2_col)) {
   hierarchy_2<-data.frame(site=data[[catid_col]],nextds=data[[nextds2_col]])
   lst_2<-list_all_upstream(hierarchy_2,catchnames = reporting_cats)
+  }
 
   for(i in 1:length(lst)){
-    if(length(lst_2[[i]])>1){
+    if(!is.null(lst_2)) { #if(length(lst_2[[i]])>1){
       values<-c()
       for(j in 2:length(lst_2[[i]])){
         values<-lst_2[[i]][j]
