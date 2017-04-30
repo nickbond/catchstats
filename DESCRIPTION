@@ -2,7 +2,7 @@ Package: catchstats
 Type: Package
 Title: Tools for manipulating nested catchment datasets
 Version: 0.1.0
-Author: Chris Walsh (author), Nick Bond (contributor)
+Author: Chris Walsh (author), Nick Bond (author)
 Maintainer: Nick Bond <n.bond@latrobe.edu.au>
 Description: A suite of tools for tracing the links within a nested\n
   catchment dataset. Nested implies that for each subcatchment\n
