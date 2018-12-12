@@ -4,7 +4,9 @@
 \alias{extractRasterPoly}
 \title{function to extract data from a raster or raster stack for indivdiual polygons within a shapefile.}
 \usage{
-extractRasterPoly(shpfile, rast, catid_col, start = 1, end = nrow(shpfile))
+extractRasterPoly(shpfile, rast, catid_col, fun = mean, weights = TRUE,
+  normalizeWeights = TRUE, na.rm = TRUE, small = TRUE, start = 1,
+  end = nrow(shpfile))
 }
 \arguments{
 \item{shpfile}{The shapefile to be used to intersect with the raster layers}
@@ -13,8 +15,19 @@ extractRasterPoly(shpfile, rast, catid_col, start = 1, end = nrow(shpfile))
 
 \item{catid_col}{the catchment id field in the shpfile}
 
+\item{fun}{The function to apply. Requires a single value is returned
+(e.g. fun = mean, fun = max). see `raster::extract`` for more details}
+
+\item{weights}{see `Raster::extract`}
+
+\item{normalizeWeights}{see `Raster::extract`}
+
+\item{na.rm}{see `Raster::extract`}
+
+\item{small}{see `Raster::extract`}
+
 \item{start}{the first polygon in the shapefile to be used for intersection
-Defaults to a value of 1 (the first row).}
+Defaults to a value of 1 (the first row)}
 
 \item{end}{The last polygon in the shapfile to be intersected.}
 }
@@ -29,7 +42,7 @@ function to extract data from a raster or raster stack for indivdiual polygons w
 #Define a bounding box for the city of Melbourne, Australia and surrounds
 melb <- list(x = c(144.0000, 146.5000), y = c(-39.0000, -37.0000))
 awap_stack <- stack_awap(bbox=melb, start='20130131')
-vic_cats<-readShapePoly('/Users/nickbond/Data/GIS_Data/Australia/BaseData/Catchments/VIC/VIC_CATCHMENTS.shp')
+vic_cats<-readShapePoly('/Users/nbond/Data/GIS_Data/Australia/BaseData/Catchments/VIC/VIC_CATCHMENTS.shp')
 proj4string(vic_cats) <- CRS('+init=epsg:4283')
 vic_cats <- spTransform(vic_cats, CRS('+init=epsg:28355'))
 vic_cats <- vic_cats[which(vic_cats@data$BNAME \%in\% c('YARRA RIVER', 'MARIBYRNONG RIVER')),]
@@ -39,4 +52,3 @@ plot(vic_cats, add=TRUE)
 vic_cats_runoff<-extractRasterPoly(vic_cats, rast=melb_awap, catid_col='BNAME')
 
 }
-
