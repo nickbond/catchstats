@@ -37,4 +37,3 @@ catch_stats(sitelist=mwcats$site[1:5], hierarchy = mwcats[,c(1:2)],
 subcatchment.data=mwcats$scstrlen, FUN=sum)
 
 }
-

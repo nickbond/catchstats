@@ -34,4 +34,3 @@ data(mwcats)
 findnds(hierarchy = mwcats[,c(1:2)], catchname = mwcats$site[1], candidates=mwcats$site)
 
 }
-

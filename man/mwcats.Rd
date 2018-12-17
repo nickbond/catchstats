@@ -26,4 +26,3 @@ data(mwcats)
 A dataset containing catchment variables for catchments around Melbourne, Australia.
 }
 \keyword{datasets}
-

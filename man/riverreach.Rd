@@ -36,4 +36,3 @@ data(mwcats)
 #riverreach(hierarchy = mwcats[,c(1:2)], upstream='YARR2415', downstream='YARR001')
 
 }
-

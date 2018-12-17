@@ -24,4 +24,3 @@ data(mwcats)
 all_pairs(mwcats$site[1:5])
 
 }
-

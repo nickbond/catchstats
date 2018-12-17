@@ -36,4 +36,3 @@ list_all_nds(hierarchy = mwcats[,c(1:2)], catchnames = mwcats$site[1:5],
 candidates=sample(mwcats$site, size = 4000))
 
 }
-

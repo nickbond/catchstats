@@ -24,4 +24,3 @@ data files on the server.
 \examples{
 download_awap()
 }
-

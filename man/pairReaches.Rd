@@ -32,4 +32,3 @@ df<- all_pairs(mwcats$site[1:5])
 apply(df,1 , function(x) pairReaches(hierarchy=mwcats[,c(1:2)], x[[1]],x[[2]]))
 
 }
-

@@ -50,4 +50,3 @@ vic <- list(x = c(141.0, 150.2), y = c(-34.0, -39.2))
 vic_awap <- stack_awap(bbox=vic, start_date='19900131')
 writeRaster(vic_awap, filename='vic_awap_1990_2014.grd', bandorder='BIL', overwrite=TRUE)
 }
-

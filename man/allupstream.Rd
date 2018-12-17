@@ -32,4 +32,3 @@ data(mwcats)
 
 allupstream(hierarchy = mwcats, catchname = mwcats$site[1])
 }
-
