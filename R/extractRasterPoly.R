@@ -27,19 +27,26 @@
 
 extractRasterPoly <- function(shpfile, rast, catid_col, start = 1, end = nrow(shpfile)) {
 
-    # vector('list', length(start:end))
-
-    loc.values <- vector("list", length(start:end))
-    shpfile <- shpfile[start:end, ]
-
-    for (i in 1:length(shpfile)) {
-        poly <- shpfile[i, ]
-        loc.values[[i]] <- raster::extract(rast, poly, na.rm = T, weights = TRUE, fun = "mean", normalizeWeights = TRUE, small = TRUE)
-        print(i)
-    }
-
-    loc.values.df <- as.data.frame(t(do.call("rbind", loc.values)))
-    names(loc.values.df) <- shpfile@data[, catid_col]
-    return(loc.values.df)
+  # vector('list', length(start:end))
+  
+  #loc.values <- vector("list", length(start:end))
+  shpfile <- shpfile[start:end, ]
+  
+  #for (i in 1:length(shpfile)) {
+  #  poly <- shpfile[i, ]
+  #  loc.values[[i]] <- raster::extract(rast, poly, na.rm = T, weights = TRUE, fun = "mean", normalizeWeights = TRUE, small = TRUE)
+  #  print(i)
+  #}
+  #
+  #loc.values.df <- as.data.frame(t(do.call("rbind", loc.values)))
+  
+  rast<-velox(rast)   # require the "velox" R package
+  loc.values.df<-rast$extract(shpfile,fun=mean, small=TRUE,df=TRUE)
+  
+  loc.values.df[is.na(loc.values.df)]<-0
+  rownames(loc.values.df) <- shpfile@data[, catid_col]
+  loc.values.df<-t(loc.values.df)
+  return(loc.values.df[-1,])
+    
 }
 
