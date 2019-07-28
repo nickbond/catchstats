@@ -1,4 +1,5 @@
 #' function to extract data from a raster or raster stack for indivdiual polygons within a shapefile.
+#' require "velox" package
 #'
 #' @param shpfile The shapefile to be used to intersect with the raster layers
 #' @param rast The raster layer(s) to be intersected
