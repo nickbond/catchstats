@@ -22,7 +22,7 @@ download_awap <- function() {
     hist_grid_names <- unlist(strsplit(hist_remote_file_names, "\n"))
     hist_grid_names <- hist_grid_names[!grepl("2014", hist_grid_names)]
     op_grid_names <- unlist(strsplit(op_remote_file_names, "\n"))
-    op_grid_names <- op_grid_names[grepl("2014|2015|2016|2017|2018|2019|2020|2021", op_grid_names)]
+    op_grid_names <- op_grid_names[grepl("2014|2015|2016|2017|2018|2019|2020", op_grid_names)]
     op_grid_names <- op_grid_names[grepl(".flt", op_grid_names)]
 
     hist_grids_to_dwnld <- gsub("\\r", "", setdiff(hist_grid_names, local_file_names))
@@ -42,7 +42,7 @@ download_awap <- function() {
 
     if(length(op_grids_to_dwnld>1)) {
     for (i in 1:length(op_grids_to_dwnld)) {
-      utils::download.file(file.path("ftp://ftp-rs.it.csiro.au","pub","awap","Australia_operational_v26","monthly", op_grids_to_dwnld[i]), destfile = file.path("awap_zip_files", op_grids_to_dwnld[i]), method="libcurl")
+      utils::download.file(file.path("ftp://ftp-rs.it.csiro.au","pub","awap","Australia_operational_v26","monthly", "flt-zip", op_grids_to_dwnld[i]), destfile = file.path("awap_zip_files", op_grids_to_dwnld[i]), method="libcurl")
     }
     }
 
