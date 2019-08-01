@@ -36,13 +36,13 @@ download_awap <- function() {
     if(length(hist_grids_to_dwnld>1)) {
     for (i in 1:length(hist_grids_to_dwnld)) {
 
-        utils::download.file(file.path("ftp.eoc.csiro.au","pub","awap","Australia_historical","Run26j","FWDis", hist_grids_to_dwnld[i]), destfile = file.path("awap_zip_files", hist_grids_to_dwnld[i]), method="libcurl")
+        utils::download.file(file.path("ftp://ftp-rs.it.csiro.au","pub","awap","Australia_historical","Run26j","FWDis", hist_grids_to_dwnld[i]), destfile = file.path("awap_zip_files", hist_grids_to_dwnld[i]), method="libcurl")
     }
     }
 
     if(length(op_grids_to_dwnld>1)) {
     for (i in 1:length(op_grids_to_dwnld)) {
-      utils::download.file(file.path("ftp.eoc.csiro.au","pub","awap","Australia_operational_v26","monthly", op_grids_to_dwnld[i]), destfile = file.path("awap_zip_files", op_grids_to_dwnld[i]), method="libcurl")
+      utils::download.file(file.path("ftp://ftp-rs.it.csiro.au","pub","awap","Australia_operational_v26","monthly", op_grids_to_dwnld[i]), destfile = file.path("awap_zip_files", op_grids_to_dwnld[i]), method="libcurl")
     }
     }
 
