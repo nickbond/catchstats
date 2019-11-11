@@ -28,7 +28,7 @@
 #' writeRaster(vic_awap, filename='vic_awap_1990_2014.grd', bandorder='BIL', overwrite=TRUE)
 #' @export
 
-stack_awap_cl <- function(bbox = NULL, stack_proj = c("+init=epsg:4326"), start_date = "20120131", variable = "FWDis", sequence = "monthly", stat = "raw", no_cores=parallel::detectCores()-1) {
+stack_awap_cl <- function(bbox = NULL, start_date = "20000131", variable = "FWDis", sequence = "monthly", stat = "raw") {
   if (is.null(bbox))
     stop("please specify a bounding box or specify 'none' for the whole country")
 
@@ -66,38 +66,40 @@ stack_awap_cl <- function(bbox = NULL, stack_proj = c("+init=epsg:4326"), start_
   if (length(bbox) > 1) {
     bound_box <- raster::extent(bbox)
   }
-  # Set unprojected reference system WGS84
-  unref <- CRS("+init=epsg:4326")
+  # Set unprojected reference system GDA94
+  #unref <- CRS("+init=epsg:4283")
   list_raster<-list()
   # try building the stack now
   start = which(month_name == start_date)
-  end = length(final_name_files_correct_order)
+  end = final_name_files_correct_order[length(final_name_files_correct_order)]
   final_name_files_correct_order <- final_name_files_correct_order[start:end]
 
-  loop_raster <- raster::raster(paste0("awap_raw_data/", hdr_files_to_stack[final_name_files_correct_order[1]]))
-  if (!is.null(bound_box)) {
-    loop_raster <- raster::crop(loop_raster, bound_box)
-  }
-  proj4string(loop_raster) <- unref
-  proj_raster <- raster::projectRaster(from = loop_raster, crs = CRS("+init=epsg:4326"), method = "bilinear")
-  proj_raster <- raster::disaggregate(proj_raster, fact=5)
-  list_raster[[1]] <- proj_raster
+  #loop_raster <- raster::raster(paste0("awap_raw_data/", hdr_files_to_stack[final_name_files_correct_order[1]]), crs=4283)
+  #if (!is.null(bound_box)) {
+  #  loop_raster <- raster::crop(loop_raster, bound_box)
+  #}
+ # proj4string(loop_raster) <- unref
+#  proj_raster <- raster::projectRaster(from = loop_raster, crs = CRS("+init=epsg:4326"), method = "bilinear")
+#  proj_raster <- raster::disaggregate(proj_raster, fact=5)
+ # list_raster[[1]] <- proj_raster
+  no_cores=parallel::detectCores()-1
 
   cl<-parallel::makeCluster(no_cores, type = "FORK")
 
   stack_list<-parallel::parLapply(cl,1:length(final_name_files_correct_order),function(i) {
-    loop_raster <- raster::raster(paste0("awap_raw_data/", hdr_files_to_stack[final_name_files_correct_order[i]]))
+    loop_raster <- raster::raster(paste0("awap_raw_data/", hdr_files_to_stack[final_name_files_correct_order[i]]), crs = CRS("+init=epsg:4283"))
     if (!is.null(bound_box)) {
       loop_raster <- raster::crop(loop_raster, bound_box)
     }
-    proj4string(loop_raster) <- unref
-    proj_raster <- raster::projectRaster(from = loop_raster, crs = CRS("+init=epsg:4326"), method = "bilinear")
-    if(i==1){
-    proj_raster <- raster::disaggregate(proj_raster, fact=5)
-    }else{
-    proj_raster <- raster::resample(proj_raster, list_raster[[1]])
-    }
-    list_raster[[i]] <- proj_raster
+      if(i==1){
+        rast_extent <- raster::extent(loop_raster)
+        }
+    else{
+        loop_raster <- raster::setExtent(loop_raster, rast_extent)
+        }
+        list_raster[[i]] <- loop_raster
+    #proj4string(loop_raster) <- unref
+    #proj_raster <- raster::projectRaster(from = loop_raster, crs = CRS("+init=epsg:4283"), method = "bilinear")
   })
   parallel::stopCluster(cl)
   awap_stack<-raster::stack(stack_list)
