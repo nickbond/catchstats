@@ -111,12 +111,12 @@ stack_awap <- function(bbox = NULL, stack_proj = c("+init=epsg:28355"), start_da
 
 
         # best to disaggregate the raster, to make sure that the weights work so that it does not round some weights to zero
-        if(i==1) {
-          proj_raster <- raster::disaggregate(proj_raster, fact=5)
-        } else {
-        # rename, might fix names(proj_raster) <- paste('val_D', i, sep ='')
-
-          proj_raster <- raster::resample(proj_raster, list_raster[[i-1]])
+        ##note, the code no longer disaggreagtes teh raster... this was deemed heavy handed and unneccessary.
+        if(i==1){
+          rast_extent <- raster::extent(loop_raster)
+        }
+        else{
+          loop_raster <- raster::setExtent(loop_raster, rast_extent)
         }
 
         # assign file name file_name <- paste(wd, '/awap_raster/awap_raster', i, '.Rdata', sep = '')
