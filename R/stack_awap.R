@@ -80,7 +80,9 @@ stack_awap <- function(bbox = NULL, stack_proj = c("+init=epsg:28355"), start_da
         bound_box <- raster::extent(bbox)
     }
     # Set unprojected reference system WGS84
-    unref <- CRS("+init=epsg:4326")
+    proj4string(melb_awap) <- CRS("+init=epsg:4283")
+    # Project the raster
+    #melb_awap<- projectRaster(melb_awap, crs = CRS("+init=epsg:4283"))
 
     list_raster <- list()
     # try building the stack now
@@ -95,36 +97,36 @@ stack_awap <- function(bbox = NULL, stack_proj = c("+init=epsg:28355"), start_da
         # Read in the raster
         loop_raster <- raster::raster(paste0("awap_raw_data/", hdr_files_to_stack[final_name_files_correct_order[i]]))
 
-
-        # Crop it based on bbox extent (if specified)
-        if (!is.null(bound_box)) {
-            loop_raster <- raster::crop(loop_raster, bound_box)
-        }
-
-        # define WGS84 for cropped raster
-        proj4string(loop_raster) <- unref
-
-
-        # reproject the raster to defined proj rast_proj
-        proj_raster <- raster::projectRaster(from = loop_raster, crs = stack_proj, method = "bilinear")
-
-
-
-        # best to disaggregate the raster, to make sure that the weights work so that it does not round some weights to zero
-        ##note, the code no longer disaggreagtes teh raster... this was deemed heavy handed and unneccessary.
         if(i==1){
           rast_extent <- raster::extent(loop_raster)
         }
         else{
           loop_raster <- raster::setExtent(loop_raster, rast_extent)
         }
+        # Crop it based on bbox extent (if specified)
+        if (!is.null(bound_box)) {
+            loop_raster <- raster::crop(loop_raster, bound_box)
+        }
+
+        # define WGS84 for cropped raster
+      #  proj4string(loop_raster) <- unref
+
+
+        # reproject the raster to defined proj rast_proj
+       # proj_raster <- raster::projectRaster(from = loop_raster, crs = stack_proj, method = "bilinear")
+
+
+
+        # best to disaggregate the raster, to make sure that the weights work so that it does not round some weights to zero
+        ##note, the code no longer disaggreagtes teh raster... this was deemed heavy handed and unneccessary.
+
 
         # assign file name file_name <- paste(wd, '/awap_raster/awap_raster', i, '.Rdata', sep = '')
 
         # save each raster and try later building save(proj_raster, file = file_name) }
 
         # Try building the stack with all the files
-        list_raster[[i]] <- proj_raster
+        list_raster[[i]] <- loop_raster
 
         # for(j in 1:length(final_name_files_correct_order)) {
 
