@@ -24,7 +24,7 @@
 #' @export
 
 
-stack_awap <- function(bbox = NULL, stack_proj = c("+init=epsg:28355"), start_date = "20120131", variable = "FWDis", sequence = "monthly", stat = "raw") {
+stack_awap <- function(bbox = NULL, stack_proj = c("+init=epsg:4283"), start_date = "20120131", variable = "FWDis", sequence = "monthly", stat = "raw") {
     if (is.null(bbox))
         stop("please specify a bounding box or specify 'none' for the whole country")
   #  wd <- getwd()
@@ -80,11 +80,13 @@ stack_awap <- function(bbox = NULL, stack_proj = c("+init=epsg:28355"), start_da
         bound_box <- raster::extent(bbox)
     }
     # Set unprojected reference system WGS84
-    proj4string(melb_awap) <- CRS("+init=epsg:4283")
+    #proj4string(melb_awap) <- CRS("+init=epsg:4283")
     # Project the raster
     #melb_awap<- projectRaster(melb_awap, crs = CRS("+init=epsg:4283"))
+    extent_raster <- raster::raster(paste0("awap_raw_data/", hdr_files_to_stack[final_name_files_correct_order[1]]))
+    crs(extent_raster) <- stack_proj
 
-    list_raster <- list()
+    raster_list <- list()
     # try building the stack now
     start = which(month_name == start_date)
     end = length(final_name_files_correct_order)
@@ -95,38 +97,18 @@ stack_awap <- function(bbox = NULL, stack_proj = c("+init=epsg:28355"), start_da
         # Nick recons the best approach is to 1 read in and clip the raster 2 reproject 3 add to raster stack 4 save raster stack
 
         # Read in the raster
-        loop_raster <- raster::raster(paste0("awap_raw_data/", hdr_files_to_stack[final_name_files_correct_order[i]]))
+        loop_raster <- raster::raster(paste0("awap_raw_data/", hdr_files_to_stack[final_name_files_correct_order[i]]), crs = stack_proj, )
+        loop_raster <- raster::setExtent(loop_raster, extent_raster)
 
-        if(i==1){
-          rast_extent <- raster::extent(loop_raster)
-        }
-        else{
-          loop_raster <- raster::setExtent(loop_raster, rast_extent)
-        }
         # Crop it based on bbox extent (if specified)
         if (!is.null(bound_box)) {
             loop_raster <- raster::crop(loop_raster, bound_box)
         }
 
-        # define WGS84 for cropped raster
-      #  proj4string(loop_raster) <- unref
 
-
-        # reproject the raster to defined proj rast_proj
-       # proj_raster <- raster::projectRaster(from = loop_raster, crs = stack_proj, method = "bilinear")
-
-
-
-        # best to disaggregate the raster, to make sure that the weights work so that it does not round some weights to zero
-        ##note, the code no longer disaggreagtes teh raster... this was deemed heavy handed and unneccessary.
-
-
-        # assign file name file_name <- paste(wd, '/awap_raster/awap_raster', i, '.Rdata', sep = '')
-
-        # save each raster and try later building save(proj_raster, file = file_name) }
 
         # Try building the stack with all the files
-        list_raster[[i]] <- loop_raster
+        raster_list[[i]] <- loop_raster
 
         # for(j in 1:length(final_name_files_correct_order)) {
 
@@ -138,7 +120,7 @@ stack_awap <- function(bbox = NULL, stack_proj = c("+init=epsg:28355"), start_da
     }
 
     # build the stack now
-    awap_stack <- raster::stack(list_raster)
+    awap_stack <- raster::stack(raster_list)
  #   setwd(wd)
     return(awap_stack)
 }

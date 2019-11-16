@@ -28,7 +28,7 @@
 #' writeRaster(vic_awap, filename='vic_awap_1990_2014.grd', bandorder='BIL', overwrite=TRUE)
 #' @export
 
-stack_awap_cl <- function(bbox = NULL, start_date = "20000131", variable = "FWDis", sequence = "monthly", stat = "raw") {
+stack_awap_cl <- function(bbox = NULL, stack_proj = c("+init=epsg:4283"), start_date = "20000131", variable = "FWDis", sequence = "monthly", stat = "raw") {
   if (is.null(bbox))
     stop("please specify a bounding box or specify 'none' for the whole country")
 
@@ -66,13 +66,20 @@ stack_awap_cl <- function(bbox = NULL, start_date = "20000131", variable = "FWDi
   if (length(bbox) > 1) {
     bound_box <- raster::extent(bbox)
   }
+
+  extent_raster <- raster::raster(paste0("awap_raw_data/", hdr_files_to_stack[final_name_files_correct_order[1]]))
+  crs(extent_raster) <- stack_proj
+
   # Set unprojected reference system GDA94
   #unref <- CRS("+init=epsg:4283")
-  list_raster<-list()
+  raster_list <- list()
   # try building the stack now
   start = which(month_name == start_date)
   end = final_name_files_correct_order[length(final_name_files_correct_order)]
   final_name_files_correct_order <- final_name_files_correct_order[start:end]
+
+  extent_raster <- raster::raster(paste0("awap_raw_data/", hdr_files_to_stack[final_name_files_correct_order[1]]))
+  crs(extent_raster) <- stack_proj
 
   #loop_raster <- raster::raster(paste0("awap_raw_data/", hdr_files_to_stack[final_name_files_correct_order[1]]), crs=4283)
   #if (!is.null(bound_box)) {
@@ -86,22 +93,19 @@ stack_awap_cl <- function(bbox = NULL, start_date = "20000131", variable = "FWDi
 
   cl<-parallel::makeCluster(no_cores, type = "FORK")
 
-  stack_list<-parallel::parLapply(cl,1:length(final_name_files_correct_order),function(i) {
-    loop_raster <- raster::raster(paste0("awap_raw_data/", hdr_files_to_stack[final_name_files_correct_order[i]]), crs = CRS("+init=epsg:4283"))
-    if (!is.null(bound_box)) {
+  raster_list<-parallel::parLapply(cl,1:length(final_name_files_correct_order),function(i) {
+    loop_raster <- raster::raster(paste0("awap_raw_data/", hdr_files_to_stack[final_name_files_correct_order[i]]), crs = stack_proj)
+    loop_raster <- raster::setExtent(loop_raster, extent_raster)
+
+
+     if (!is.null(bound_box)) {
       loop_raster <- raster::crop(loop_raster, bound_box)
     }
-      if(i==1){
-        rast_extent <- raster::extent(loop_raster)
-        }
-    else{
-        loop_raster <- raster::setExtent(loop_raster, rast_extent)
-        }
-        list_raster[[i]] <- loop_raster
+          raster_list[[i]] <- loop_raster
     #proj4string(loop_raster) <- unref
     #proj_raster <- raster::projectRaster(from = loop_raster, crs = CRS("+init=epsg:4283"), method = "bilinear")
   })
   parallel::stopCluster(cl)
-  awap_stack<-raster::stack(stack_list)
+  awap_stack<-raster::stack(raster_list)
   return(awap_stack)
 }

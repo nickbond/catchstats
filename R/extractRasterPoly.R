@@ -45,7 +45,7 @@ extractRasterPoly <- function(shpfile, rast, catid_col, fun = mean, weights = TR
   }
 
   loc.values.df <- as.data.frame(t(do.call("rbind", loc.values)))
-  names(loc.values.df) <- shpfile@data[, catid_col]
+  names(loc.values.df) <- shpfile[, catid_col]
   return(loc.values.df)
 }
 
