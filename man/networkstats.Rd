@@ -4,8 +4,7 @@
 \alias{networkstats}
 \title{summarise river network character between site pairs}
 \usage{
-networkstats(site1, site2, cat_data, catid_col, nextds_col, env_vars, FUN,
-  ...)
+networkstats(site1, site2, cat_data, catid_col, nextds_col, env_vars, FUN, ...)
 }
 \arguments{
 \item{site1}{a vector of sites for which all pairs are sought}

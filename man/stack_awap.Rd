@@ -4,9 +4,14 @@
 \alias{stack_awap}
 \title{Code to build a raster stack from AWAP grids for use in further analyses.}
 \usage{
-stack_awap(bbox = NULL, stack_proj = c("+init=epsg:28355"),
-  start_date = "20120131", variable = "FWDis", sequence = "monthly",
-  stat = "raw")
+stack_awap(
+  bbox = NULL,
+  stack_proj = c("+init=epsg:4283"),
+  start_date = "20120131",
+  variable = "FWDis",
+  sequence = "monthly",
+  stat = "raw"
+)
 }
 \arguments{
 \item{bbox}{A list of coordinates defining a subregion for the raster stack}

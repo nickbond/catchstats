@@ -4,9 +4,18 @@
 \alias{extractRasterPoly_cl}
 \title{Parallelized function to extract data from a raster or raster stack for indivdiual polygons within a shapefile.}
 \usage{
-extractRasterPoly_cl(shpfile, rast, catid_col, fun = mean,
-  weights = TRUE, normalizeWeights = TRUE, na.rm = TRUE,
-  small = TRUE, start = 1, end = nrow(shpfile))
+extractRasterPoly_cl(
+  shpfile,
+  rast,
+  catid_col,
+  fun = mean,
+  weights = TRUE,
+  normalizeWeights = TRUE,
+  na.rm = TRUE,
+  small = TRUE,
+  start = 1,
+  end = nrow(shpfile)
+)
 }
 \arguments{
 \item{shpfile}{The shapefile to be used to intersect with the raster layers}

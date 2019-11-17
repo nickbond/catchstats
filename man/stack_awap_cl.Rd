@@ -4,11 +4,19 @@
 \alias{stack_awap_cl}
 \title{Parallelized code to build a raster stack from AWAP grids for use in further analyses.}
 \usage{
-stack_awap_cl(bbox = NULL, start_date = "20000131",
-  variable = "FWDis", sequence = "monthly", stat = "raw")
+stack_awap_cl(
+  bbox = NULL,
+  stack_proj = c("+init=epsg:4283"),
+  start_date = "20000131",
+  variable = "FWDis",
+  sequence = "monthly",
+  stat = "raw"
+)
 }
 \arguments{
 \item{bbox}{A list of coordinates defining a subregion for the raster stack}
+
+\item{stack_proj}{A projection definition for the final projected raster stack}
 
 \item{start_date}{The first month in the AWAP series to inlcude in the stack. If
 only interested in recent years, this will greatly improve the efficiciency.}
@@ -18,8 +26,6 @@ only interested in recent years, this will greatly improve the efficiciency.}
 \item{sequence}{Monthly or Annual series}
 
 \item{stat}{Build a stack of the raw data or the percentile sequence (by monthly only).}
-
-\item{stack_proj}{A projection definition for the final projected raster stack}
 
 \item{no_cores}{The number of parallel cores to use.}
 }

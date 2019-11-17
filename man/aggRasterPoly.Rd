@@ -4,9 +4,19 @@
 \alias{aggRasterPoly}
 \title{function to accumulate or calculate average polygon values within a set of upstream catchment polygons.}
 \usage{
-aggRasterPoly(shpfile, rast = NULL, catid_col, nextds_col,
-  nextds2_col = NULL, catarea_col, reporting_cats = NULL, start = 1,
-  end = nrow(shpfile), loc_cat_df = NULL, fun = NULL)
+aggRasterPoly(
+  shpfile,
+  rast = NULL,
+  catid_col,
+  nextds_col,
+  nextds2_col = NULL,
+  catarea_col,
+  reporting_cats = NULL,
+  start = 1,
+  end = nrow(shpfile),
+  loc_cat_df = NULL,
+  fun = NULL
+)
 }
 \arguments{
 \item{shpfile}{The shapefile to be used to intersect with the raster layers (optional)}

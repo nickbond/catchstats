@@ -12,7 +12,7 @@ License: GPL-3
 Depends: R (>= 2.10)
 LazyData: TRUE
 Encoding: UTF-8
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.0
 Imports: parallel,
     raster,
     stringr,
