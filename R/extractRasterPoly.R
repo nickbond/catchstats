@@ -38,7 +38,7 @@ extractRasterPoly <- function(shpfile, rast, catid_col, fun = mean, weights = TR
   loc.values <- vector("list", length(start:end))
   shpfile <- shpfile[start:end, ]
 
-  for (i in 1:length(shpfile)) {
+  for (i in 1:nrow(shpfile)) {
     poly <- shpfile[i, ]
     loc.values[[i]] <- raster::extract(rast, poly, na.rm = na.rm, weights = weights, fun = fun, normalizeWeights = normalizeWeights, small = small)
     print(i)
