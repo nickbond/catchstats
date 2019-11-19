@@ -23,6 +23,7 @@ download_awap <- function() {
     hist_grid_names <- hist_grid_names[!grepl("2014", hist_grid_names)]
     op_grid_names <- unlist(strsplit(op_remote_file_names, "\n"))
     op_grid_names <- op_grid_names[grepl("2014|2015|2016|2017|2018|2019|2020", op_grid_names)]
+    op_grid_names <- op_grid_names[!grepl("2012|2013", op_grid_names)]
     op_grid_names <- op_grid_names[grepl(".flt", op_grid_names)]
 
     hist_grids_to_dwnld <- gsub("\\r", "", setdiff(hist_grid_names, local_file_names))

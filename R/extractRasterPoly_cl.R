@@ -46,7 +46,7 @@ extractRasterPoly_cl <- function(shpfile, rast, catid_col, fun = mean, weights =
   })
   parallel::stopCluster(cl)
   loc.values.df <- as.data.frame(t(do.call("rbind", fits)))
-  names(loc.values.df) <- shpfile[["subc"]]
+  names(loc.values.df) <- shpfile[[{catid_col}]]
   return(loc.values.df)
 }
 
