@@ -1,6 +1,6 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-#catchstats
+\#catchstats
 
 catchstats includes a number of functions written by Chris Walsh and
 Nick Bond for working with nested catchment or river-network data
@@ -13,7 +13,7 @@ a field (column) identifying the next downstream catchment identity.
 Together these are referred to as a ‘hierarchy table’, and are included
 with many DEM derived stream networks.
 
-#Installation To install run the following code:
+\#Installation To install run the following code:
 
       # install devtools pacakge
       install.packages(c("devtools"))
@@ -27,9 +27,9 @@ with many DEM derived stream networks.
         #load library
         library(catchstats)
 
-#Example
+\#Example
 
-#To be completed
+\#To be completed
 
 <!--  The code below produces the following plot for Cooper Creek, a highly ephemeral river in western Queensland, Australia. The function uses geom_raster() from the ggplot2 package. Addtional options are available (see ?ctf_heatmap for details). -->
 <!-- ``` -->
@@ -40,4 +40,4 @@ with many DEM derived stream networks.
 <!-- ```  -->
 <!-- ![Alt tag](https://github.com/nickbond/hydroplots/raw/master/ctf_heatmap.png "CTF Heatmap") -->
 
-#Developer Nick Bond <n.bond@latrobe.edu.au>
+\#Developer Nick Bond <n.bond@latrobe.edu.au>

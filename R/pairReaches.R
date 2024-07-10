@@ -20,8 +20,8 @@
 
 pairReaches <- function(hierarchy, site1, site2) {
     sites <- c(site1, site2)
-    all.ds.sites <- list_all_downstream(hierarchy, sites)
-    
+    all.ds.sites<- purrr::map(sites, ~ alldownstream(hierarchy, .x)) %>% purrr::set_names(., sites)
+
     # check if the two sites are within the same stream network.
     if(length(intersect(all.ds.sites[[1]],all.ds.sites[[2]]))>1){
       ds.sites <- unique(c(setdiff(all.ds.sites[[1]], all.ds.sites[[2]]), setdiff(all.ds.sites[[2]], all.ds.sites[[1]])))

@@ -18,11 +18,12 @@
 #' @export
 
 
- networkstats<-function(site1,site2, cat_data, catid_col, nextds_col, env_vars, FUN, ...) {
+  networkstats<-function(site1,site2, cat_data, catid_col, nextds_col, env_vars, FUN, ...) {
 
    hierarchy <- data.frame(site = cat_data[[catid_col]], nextds = cat_data[[nextds_col]])
 
-   all.ds.sites<-list_all_downstream(hierarchy, c(site1,site2))
+   all.ds.sites<- purrr::map(c(site1,site2), ~ alldownstream(hierarchy, .x)) %>% purrr::set_names(., c(site1,site2))
+
    ds.sites<-unique(c(setdiff(all.ds.sites[[1]], all.ds.sites[[2]]), setdiff(all.ds.sites[[2]],all.ds.sites[[1]])))
    ds.sites<-unique(c(ds.sites,site1,site2))
 

@@ -14,12 +14,8 @@ LazyData: TRUE
 Encoding: UTF-8
 RoxygenNote: 7.3.2
 Imports: 
-    stringr,
-    sf,
-    methods,
-    lubridate
-Suggests: 
     purrr,
     raster,
-    exactextract
-  
+    exactextractr,
+    dplyr,
+    magrittr
