@@ -4,7 +4,8 @@
 \name{mwcats}
 \alias{mwcats}
 \title{Physiographic and climatic catchment variables}
-\format{A data frame with 12319 rows and 12 variables:
+\format{
+A data frame with 12319 rows and 12 variables:
 \itemize{
   \item site. Site code
   \item nextds. Next downstream site code
@@ -18,7 +19,10 @@
   \item stranntemp. Annual stream temperature
   \item rdi. River disturbance index
   \item strahler. Strahler stream order.
-}}
+}
+
+A data frame with 12319 rows and 10 variables
+}
 \usage{
 data(mwcats)
 }

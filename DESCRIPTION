@@ -1,7 +1,7 @@
 Package: catchstats
 Type: Package
 Title: Tools for manipulating nested catchment datasets
-Version: 0.2.0
+Version: 0.3.0
 Author: Chris Walsh (author), Nick Bond (author)
 Maintainer: Nick Bond <n.bond@latrobe.edu.au>
 Description: A suite of tools for tracing the links within a nested\n
@@ -12,12 +12,14 @@ License: GPL-3
 Depends: R (>= 2.10)
 LazyData: TRUE
 Encoding: UTF-8
-RoxygenNote: 7.0.0
-Imports: parallel,
-    raster,
+RoxygenNote: 7.3.2
+Imports: 
     stringr,
-    maptools,
+    sf,
     methods,
-    lubridate,
-    RCurl,
-    rgdal
+    lubridate
+Suggests: 
+    purrr,
+    raster,
+    exactextract
+  

@@ -37,7 +37,7 @@ aggRasterPoly <- function(shpfile, rast = NULL, catid_col, nextds_col, nextds2_c
     lst_2 <- NULL
   }
 
-  data <- methods::slot(shpfile, "data")
+  data <- st_drop_geometry(shpfile)
 
   if (is.null(reporting_cats)) {
     reporting_cats <- data[[catid_col]][start:end]
